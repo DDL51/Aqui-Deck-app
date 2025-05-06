@@ -1,13 +1,13 @@
 
-import streamlit as st 
-import json 
-import os from fpdf 
-import FPDF from datetime 
-import datetime 
-import gspread from google.oauth2.service_account 
-import Credentials from pydrive.auth 
-import GoogleAuth from pydrive.drive 
-import GoogleDrive
+import streamlit as st
+import json
+import os
+from fpdf import FPDF
+from datetime import datetime
+import gspread
+from google.oauth2.service_account import Credentials
+from pydrive.auth import GoogleAuth
+from pydrive.drive import GoogleDrive
 
 #-------- CONFIGS --------
 
