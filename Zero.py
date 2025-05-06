@@ -8,14 +8,14 @@ from google.oauth2.service_account import Credentials
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
 
--------- CONFIGS --------
+#-------- CONFIGS --------
 ARQ_PRODUTOS = "produtos.json"
 PASTA_PDFS = "orcamentos"
 SHEET_NAME = "Nome da Planilha"
 JSON_CRED_PATH = "Planilhas.json"
 DRIVE_FOLDER_ID = "0B8YxMAd2J3kFckV4VjVhV1Y1NE0"  # Substitua com o ID da pasta no seu Drive
 
--------- AUTENTICAÇÃO GOOGLE SHEETS --------
+#-------- AUTENTICAÇÃO GOOGLE SHEETS --------
 def conectar_planilha():
 try:
 scope = ["https://www.googleapis.com/auth/spreadsheets"]
@@ -26,7 +26,7 @@ except Exception as e:
 st.error(f"Erro na autenticação com Google Sheets: {e}")
 return None
 
--------- AUTENTICAÇÃO GOOGLE DRIVE --------
+#-------- AUTENTICAÇÃO GOOGLE DRIVE --------
 def enviar_para_drive(caminho_arquivo):
 gauth = GoogleAuth()
 gauth.LoadCredentialsFile(JSON_CRED_PATH)
@@ -40,7 +40,7 @@ arquivo = drive.CreateFile({'title': os.path.basename(caminho_arquivo), 'parents
 arquivo.SetContentFile(caminho_arquivo)
 arquivo.Upload()
 
--------- DADOS LOCAIS --------
+#-------- DADOS LOCAIS --------
 def carregar_dados():
 if not os.path.exists(ARQ_PRODUTOS):
 with open(ARQ_PRODUTOS, "w") as f:
@@ -52,7 +52,7 @@ def salvar_dados(dados):
 with open(ARQ_PRODUTOS, "w") as f:
 json.dump(dados, f, indent=4)
 
--------- PDF --------
+#-------- PDF --------
 def gerar_pdf(nome_cliente, contato, bairro, itens, total_geral):
 os.makedirs(PASTA_PDFS, exist_ok=True)
 data = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
@@ -86,7 +86,7 @@ pdf.cell(200, 10, f"Total Geral: R$ {total_geral:.2f}", ln=True)
 pdf.output(nome_arquivo)
 return nome_arquivo
 
--------- APP PRINCIPAL --------
+#-------- APP PRINCIPAL --------
 def main():
 st.title("AQUI-DECK App")
 
