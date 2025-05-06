@@ -117,20 +117,60 @@ def main():
                 salvar_dados(dados)
                 st.success("Serviço salvo com sucesso!")
 
-        elif tipo == "Produto":
-            nome = st.text_input("Nome do Produto")
-            base = st.number_input("Valor Base (R$)", min_value=0.0, format="%.2f",value=None)
-            imposto = st.number_input("Imposto (%)", min_value=0.0, format="%.2f",value=None)
-            repasse = st.number_input("Repasse (R$)", min_value=0.0, format="%.2f",value=None)
-            usinagem = st.number_input("Usinagem (R$)", min_value=0.0, format="%.2f",value=None)
+ elif tipo == "Produto":
+    dados = carregar_dados()
+    produtos = dados.get("produtos", [])
+    nomes_produtos = [produto.get("nome") for produto in produtos if produto.get("nome")]
 
-            valor_final = base + (base * imposto / 100) + repasse + usinagem
-            st.write(f"Valor Final: R$ {valor_final:.2f}")
+    st.subheader("Cadastro / Alteração de Produto")
 
-            if st.button("Salvar Produto") and nome.strip():
-                dados["produtos"].append({"nome": nome, "valor": round(valor_final, 2)})
+    # Widget para selecionar um produto existente para alterar
+    nome_para_alterar = st.selectbox("Selecione o produto para alterar (opcional):", [""] + nomes_produtos)
+
+    nome = st.text_input("Nome do Produto", value=nome_para_alterar if nome_para_alterar else "")
+    base = st.number_input("Valor Base (R$)", min_value=0.0, format="%.2f", value=None)
+    imposto = st.number_input("Imposto (%)", min_value=0.0, format="%.2f", value=None)
+    repasse = st.number_input("Repasse (R$)", min_value=0.0, format="%.2f", value=None)
+    usinagem = st.number_input("Usinagem (R$)", min_value=0.0, format="%.2f", value=None)
+
+    # Preencher os inputs com os valores do produto selecionado
+    if nome_para_alterar:
+        produto_selecionado = next((p for p in produtos if p.get("nome") == nome_para_alterar), None)
+        if produto_selecionado:
+            base = st.number_input("Valor Base (R$)", min_value=0.0, format="%.2f", value=produto_selecionado.get("base", 0.0))
+            imposto = st.number_input("Imposto (%)", min_value=0.0, format="%.2f", value=produto_selecionado.get("imposto", 0.0))
+            repasse = st.number_input("Repasse (R$)", min_value=0.0, format="%.2f", value=produto_selecionado.get("repasse", 0.0))
+            usinagem = st.number_input("Usinagem (R$)", min_value=0.0, format="%.2f", value=produto_selecionado.get("usinagem", 0.0))
+
+    valor_final = base + (base * imposto / 100) + repasse + usinagem
+    st.write(f"Valor Final: R$ {valor_final:.2f}")
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        if st.button("Salvar Produto") and nome.strip() and not nome_para_alterar:
+            dados["produtos"].append({"nome": nome, "base": base, "imposto": imposto, "repasse": repasse, "usinagem": usinagem, "valor": round(valor_final, 2)})
+            salvar_dados(dados)
+            st.success("Produto salvo com sucesso!")
+
+    with col2:
+        if st.button("Alterar Produto") and nome_para_alterar:
+            produto_alterado = False
+            for produto in dados["produtos"]:
+                if produto.get("nome") == nome_para_alterar:
+                    produto["nome"] = nome
+                    produto["base"] = base
+                    produto["imposto"] = imposto
+                    produto["repasse"] = repasse
+                    produto["usinagem"] = usinagem
+                    produto["valor"] = round(valor_final, 2)
+                    produto_alterado = True
+                    break
+            if produto_alterado:
                 salvar_dados(dados)
-                st.success("Produto salvo com sucesso!")
+                st.success(f"Produto '{nome_para_alterar}' atualizado com sucesso!")
+            else:
+                st.warning(f"Produto '{nome_para_alterar}' não encontrado para alteração.")
 
     elif modo == "Orçamento":
         st.subheader("Orçamento para Cliente")
