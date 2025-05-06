@@ -18,18 +18,51 @@ SHEET_NAME = "Nome da Planilha"
 JSON_CRED_PATH = "Planilhas.json"
 #-------- AUTENTICAÇÃO GOOGLE --------
 
-def conectar_planilha(): try: scope = ["https://www.googleapis.com/auth/spreadsheets"] creds = Credentials.from_service_account_file(JSON_CRED_PATH, scopes=scope) client = gspread.authorize(creds) return client.open(SHEET_NAME).sheet1 except Exception as e: st.error(f"Erro na autenticação com Google Sheets: {e}") return None
-
+def conectar_planilha():
+    try:
+        scope = ["https://www.googleapis.com/auth/spreadsheets"]
+        creds = Credentials.from_service_account_file(JSON_CRED_PATH, scopes=scope)
+        client = gspread.authorize(creds)
+        return client.open(SHEET_NAME).sheet1
+    except Exception as e:
+        st.error(f"Erro na autenticação com Google Sheets: {e}")
+        return None
+        
 #-------- DADOS LOCAIS --------
 
-def carregar_dados(): if not os.path.exists(ARQ_PRODUTOS): with open(ARQ_PRODUTOS, "w") as f: json.dump({"fixos": [], "produtos": []}, f) with open(ARQ_PRODUTOS, "r") as f: return json.load(f)
-
-def salvar_dados(dados): with open(ARQ_PRODUTOS, "w") as f: json.dump(dados, f, indent=4)
-
+def carregar_dados():
+    if not os.path.exists(ARQ_PRODUTOS):
+        with open(ARQ_PRODUTOS, "w") as f:
+            json.dump({"fixos": [], "produtos": []}, f)
+    with open(ARQ_PRODUTOS, "r") as f:
+        return json.load(f)
+def salvar_dados(dados):
+    with open(ARQ_PRODUTOS, "w") as f:
+        json.dump(dados, f, indent=4)
 #-------- PDF --------
 
-def gerar_pdf(nome_cliente, contato, bairro, itens, total_geral): os.makedirs(PASTA_PDFS, exist_ok=True) data = datetime.now().strftime("%Y-%m-%d_%H-%M-%S") nome_arquivo = f"{PASTA_PDFS}/orcamento_{nome_cliente.replace(' ', '')}{data}.pdf"
+def gerar_pdf(nome_cliente, contato, bairro, itens, total_geral):
+    os.makedirs(PASTA_PDFS, exist_ok=True)
+    data = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    nome_arquivo = f"{PASTA_PDFS}/orcamento_{nome_cliente.replace(' ', '')}_{data}.pdf"
+    
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font("Arial", size=12)
+    
+    pdf.cell(200, 10, txt="Orçamento AquiDeck", ln=True, align="C")
+    pdf.cell(200, 10, txt=f"Cliente: {nome_cliente} | Contato: {contato} | Bairro: {bairro}", ln=True, align="L")
+    pdf.ln(10)
 
+    for item in itens:
+        linha = f"{item['nome']} - Quantidade: {item['quantidade']} - Preço Unit.: R${item['preco']} - Total: R${item['total']}"
+        pdf.cell(200, 10, txt=linha, ln=True)
+
+    pdf.ln(10)
+    pdf.cell(200, 10, txt=f"Total Geral: R${total_geral}", ln=True, align="R")
+
+    pdf.output(nome_arquivo)
+    return nome_arquivo
 pdf = FPDF()
 pdf.add_page()
 pdf.set_font("Arial", size=12)
@@ -60,8 +93,32 @@ return nome_arquivo
 
 #-------- ENVIAR PARA DRIVE --------
 
-def enviar_para_drive(caminho_arquivo): try: gauth = GoogleAuth() gauth.LoadCredentialsFile("mycreds.txt") if gauth.credentials is None: gauth.LocalWebserverAuth() elif gauth.access_token_expired: gauth.Refresh() else: gauth.Authorize() gauth.SaveCredentialsFile("mycreds.txt")
+def enviar_para_drive(caminho_arquivo):
+    try:
+        gauth = GoogleAuth()
+        gauth.LoadCredentialsFile("mycreds.txt")
 
+        if gauth.credentials is None:
+            gauth.LocalWebserverAuth()
+        elif gauth.access_token_expired:
+            gauth.Refresh()
+        else:
+            gauth.Authorize()
+
+        gauth.SaveCredentialsFile("mycreds.txt")
+        drive = GoogleDrive(gauth)
+
+        arquivo_drive = drive.CreateFile({
+            'title': os.path.basename(caminho_arquivo),
+            'parents': [{'id': PASTA_DRIVE_ID}]
+        })
+
+        arquivo_drive.SetContentFile(caminho_arquivo)
+        arquivo_drive.Upload()
+
+        st.success("PDF enviado para o Google Drive com sucesso!")
+    except Exception as e:
+        st.error(f"Erro ao enviar para o Google Drive: {e}")
 drive = GoogleDrive(gauth)
     arquivo_drive = drive.CreateFile({
         'title': os.path.basename(caminho_arquivo),
