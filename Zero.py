@@ -175,5 +175,6 @@ def main():
                         st.session_state.itens = []
                 else:
                     st.warning("Preencha nome do cliente e contato para salvar o PDF.")
- if __name__ == "__main__":
- main()
+                
+if __name__ == "__main__":
+main()
