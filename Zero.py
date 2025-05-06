@@ -17,11 +17,11 @@ DRIVE_FOLDER_ID = "0B8YxMAd2J3kFckV4VjVhV1Y1NE0"  # Substitua com o ID da pasta 
 
 #-------- AUTENTICAÇÃO GOOGLE SHEETS --------
 def conectar_planilha():
-try:
-scope = ["https://www.googleapis.com/auth/spreadsheets"]
-creds = Credentials.from_service_account_file(JSON_CRED_PATH, scopes=scope)
-client = gspread.authorize(creds)
-return client.open(SHEET_NAME).sheet1
+    try:
+        scope = ["https://www.googleapis.com/auth/spreadsheets"]
+        creds = Credentials.from_service_account_file(JSON_CRED_PATH, scopes=scope)
+        client = gspread.authorize(creds)
+        return client.open(SHEET_NAME).sheet1
 except Exception as e:
 st.error(f"Erro na autenticação com Google Sheets: {e}")
 return None
