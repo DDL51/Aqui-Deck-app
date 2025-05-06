@@ -111,7 +111,7 @@ def main():
 
         if tipo == "Fixo":
             nome = st.text_input("Nome do Serviço Fixo")
-            valor = st.number_input("Valor Total (R$)", min_value=0.0, format="%.2f")
+            valor = st.number_input("Valor Total (R$)", min_value=., format="%.2f")
             if st.button("Salvar Serviço Fixo") and nome.strip():
                 dados["fixos"].append({"nome": nome, "valor": valor})
                 salvar_dados(dados)
