@@ -148,22 +148,33 @@ def main():
                 "total": total
             })
             st.success(f"{produto_sel} adicionado ao pedido!")
+#butao
+        if name == "main": main()
+            from googleapiclient.discovery import build
+from googleapiclient.http import MediaFileUpload
 
-        if st.session_state.itens:
-            st.subheader("Itens do Pedido")
-            total_geral = sum(i["total"] for i in st.session_state.itens)
-            for i, item in enumerate(st.session_state.itens):
-                st.write(f"{i+1}. {item['produto']} - Qtd: {item['qtd']} - Comp: {item['comp']} mm - Total: R$ {item['total']:.2f}")
+# ID da pasta no Google Drive
+PASTA_ID = "0B8YxMAd2J3kFckV4VjVhV1Y1NE0"
 
-            st.write(f"**Total Geral: R$ {total_geral:.2f}**")
+def enviar_para_drive(caminho_arquivo):
+    try:
+        scope = ["https://www.googleapis.com/auth/drive"]
+        creds = Credentials.from_service_account_file(JSON_CRED_PATH, scopes=scope)
+        service = build("drive", "v3", credentials=creds)
 
-            if st.button("Salvar Orçamento (PDF + Drive)"):
-    if nome_cliente.strip() and contato.strip():
-        arquivo = gerar_pdf(nome_cliente, contato, bairro, st.session_state.itens, total_geral)
-        st.success(f"PDF gerado: {arquivo}")
-        enviar_para_drive(arquivo)
-        st.session_state.itens = []
-    else:
-        st.warning("Preencha nome do cliente e contato para salvar o orçamento.")
-if __name__ == "__main__":
-    main()
+        nome_arquivo = os.path.basename(caminho_arquivo)
+        arquivo_metadata = {
+            "name": nome_arquivo,
+            "parents": [PASTA_ID]
+        }
+        media = MediaFileUpload(caminho_arquivo, resumable=True)
+
+        service.files().create(
+            body=arquivo_metadata,
+            media_body=media,
+            fields="id"
+        ).execute()
+
+        st.success(f"PDF enviado para o Google Drive com sucesso.")
+    except Exception as e:
+        st.error(f"Erro ao enviar para o Google Drive: {e}")
