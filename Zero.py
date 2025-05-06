@@ -69,6 +69,25 @@ def gerar_pdf(nome_cliente, contato, bairro, itens, total_geral):
     pdf.cell(200, 10, f"Total Geral: R$ {total_geral:.2f}", ln=True)
     pdf.output(nome_arquivo)
     return nome_arquivo
+    #nova função envia para Driver 
+from googleapiclient.discovery import build
+from googleapiclient.http import MediaFileUpload
+
+def enviar_para_drive(nome_arquivo):
+    try:
+        SCOPES = ['https://www.googleapis.com/auth/drive.file']
+        creds = Credentials.from_service_account_file(JSON_CRED_PATH, scopes=SCOPES)
+        service = build('drive', 'v3', credentials=creds)
+
+        file_metadata = {
+            'name': os.path.basename(nome_arquivo),
+            'mimeType': 'application/pdf'
+        }
+        media = MediaFileUpload(nome_arquivo, mimetype='application/pdf')
+        file = service.files().create(body=file_metadata, media_body=media, fields='id').execute()
+        st.success(f"Arquivo enviado ao Google Drive! ID: {file.get('id')}")
+    except Exception as e:
+        st.error(f"Erro ao enviar para o Google Drive: {e}")
 
 # -------- APP PRINCIPAL --------
 def main():
@@ -138,13 +157,13 @@ def main():
 
             st.write(f"**Total Geral: R$ {total_geral:.2f}**")
 
-            if st.button("Gerar PDF"):
-                if nome_cliente.strip() and contato.strip():
-                    arquivo = gerar_pdf(nome_cliente, contato, bairro, st.session_state.itens, total_geral)
-                    st.success(f"PDF gerado com sucesso: {arquivo}")
-                    st.session_state.itens = []
-                else:
-                    st.warning("Preencha nome do cliente e contato para gerar o PDF.")
-
+            if st.button("Salvar Orçamento (PDF + Drive)"):
+    if nome_cliente.strip() and contato.strip():
+        arquivo = gerar_pdf(nome_cliente, contato, bairro, st.session_state.itens, total_geral)
+        st.success(f"PDF gerado: {arquivo}")
+        enviar_para_drive(arquivo)
+        st.session_state.itens = []
+    else:
+        st.warning("Preencha nome do cliente e contato para salvar o orçamento.")
 if __name__ == "__main__":
     main()
