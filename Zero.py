@@ -11,8 +11,11 @@ from pydrive.drive import GoogleDrive
 
 #-------- CONFIGS --------
 
-ARQ_PRODUTOS = "produtos.json" PASTA_PDFS = "orcamentos" PASTA_DRIVE_ID = "0B8YxMAd2J3kFckV4VjVhV1Y1NE0"  # ID da pasta do Google Drive SHEET_NAME = "Nome da Planilha" JSON_CRED_PATH = "Planilhas.json"
-
+ARQ_PRODUTOS = "produtos.json"
+PASTA_PDFS = "orcamentos"
+PASTA_DRIVE_ID = "0B8YxMAd2J3kFckV4VjVhV1Y1NE0"  # ID da pasta do Google Drive
+SHEET_NAME = "Nome da Planilha"
+JSON_CRED_PATH = "Planilhas.json"
 #-------- AUTENTICAÇÃO GOOGLE --------
 
 def conectar_planilha(): try: scope = ["https://www.googleapis.com/auth/spreadsheets"] creds = Credentials.from_service_account_file(JSON_CRED_PATH, scopes=scope) client = gspread.authorize(creds) return client.open(SHEET_NAME).sheet1 except Exception as e: st.error(f"Erro na autenticação com Google Sheets: {e}") return None
