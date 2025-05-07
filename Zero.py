@@ -107,7 +107,7 @@ def main():
 
     if modo == "Cadastro":
         st.subheader("Cadastro de Produtos ou Fixos")
-        tipo = st.selectbox("Tipo:", ["Fixo", "Produto"])
+        tipo = st.selectbox("Tipo:", ["Fixo", "Produto","Alteração"])
 
         if tipo == "Fixo":
             nome = st.text_input("Nome do Serviço Fixo")
