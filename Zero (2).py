@@ -106,7 +106,7 @@ def main():
 
     if modo == "Cadastro":
         st.subheader("Cadastro de Produtos ou Fixos")
-        tipo = st.selectbox("Tipo:", ["Fixo", "Produto", "Alteração"])
+        tipo = st.selectbox("Tipo:", ["Fixo", "Produto"])
 
         if tipo == "Fixo":
             nome = st.text_input("Nome do Serviço Fixo")
@@ -118,7 +118,7 @@ def main():
 
         elif tipo == "Produto":
             nome = st.text_input("Nome do Produto")
-            base = st.number_input("Valor Base (R$)", min_value=0.0, format="%.2f")
+            base = st.number_input("Valor Base (R$)", min_value= None)
             imposto = st.number_input("Imposto (%)", min_value=0.0, format="%.2f")
             repasse = st.number_input("Repasse (R$)", min_value=0.0, format="%.2f")
             usinagem = st.number_input("Usinagem (R$)", min_value=0.0, format="%.2f")
