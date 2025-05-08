@@ -30,7 +30,7 @@ def conectar_planilha():
 def carregar_dados():
     if not os.path.exists(ARQ_PRODUTOS):
         with open(ARQ_PRODUTOS, "w") as f:
-            json.dump({"Fixos": [], "Produtos": [], "Alteração": []}, f)
+            json.dump({"Fixos": [], "Produtos": []}, f)
     with open(ARQ_PRODUTOS, "r") as f:
         return json.load(f)
 
