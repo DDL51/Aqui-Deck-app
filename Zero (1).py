@@ -26,8 +26,10 @@ def main():
 
     if modo == "Cadastro":
         st.subheader("Cadastro de Produtos ou Fixos")
-        tipo = st.selectbox("Tipo:", ["Fixo", "Produto", "Alteração"])
-
+        tipo = st.selectbox("Tipo:", ["Fixo", "Produto",])
+        if tipo =="Fixo":
+            nome = st.text_input("nome do custo")
+            valor = st.text_inout("valor")
         if tipo == "Produto":
             nome = st.text_input("Nome do Produto")
             base = st.number_input("Valor Base (R$)", min_value=0.0, format="%.2f")
