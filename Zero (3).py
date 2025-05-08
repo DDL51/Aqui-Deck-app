@@ -101,8 +101,17 @@ def enviar_para_drive(caminho_arquivo):
 def main():
     st.title("AQUI-DECK App")
 
-    dados = carregar_dados()
-    if modo = st.sidebar.radio("Escolha o modo:", ["Cadastro", "Orçamento", "Gerenciar Produtos"])
+    if modo == "Cadastro":
+        st.subheader("Cadastro de Produtos ou Fixos")
+        tipo = st.selectbox("Tipo:", ["Fixo", "Produto"])
+
+        if tipo == "Fixo":
+            nome = st.text_input("Nome do Serviço Fixo")
+            valor = st.number_input("Valor Total (R$)", min_value= None)
+            if st.button("Salvar Serviço Fixo") and nome.strip():
+                dados["Fixos"].append({"nome": nome, "valor": valor})
+                salvar_dados(dados)
+                st.success("Serviço salvo com sucesso!")
     elif modo == "Gerenciar Produtos":
     st.subheader("Gerenciar Produtos Cadastrados")
     if not dados["Produtos"]:
