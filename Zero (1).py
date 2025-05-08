@@ -27,9 +27,13 @@ def main():
     if modo == "Cadastro":
         st.subheader("Cadastro de Produtos ou Fixos")
         tipo = st.selectbox("Tipo:", ["Fixo", "Produto",])
-            if tipo == "Fixo":
-                nome = st.text_input("nome do custo fixo")
-                valor = st.number_input("valor(R$)", min_value=0.0, format="%.2f")
+    if tipo == "Fixo":
+        nome = st.text_input("nome do custo fixo")
+        valor = st.number_input("valor(R$)", min_value=0.0, format="%.2f")
+        if st.button(f"Atualizar fixo {i}"):
+                "nome": novo_nome, 
+                "valor": novo_valor
+            
         if tipo == "Produto":
             nome = st.text_input("Nome do Produto")
             base = st.number_input("Valor Base (R$)", min_value=0.0, format="%.2f")
@@ -42,6 +46,8 @@ def main():
                 dados["Produtos"].append({"nome": nome, "valor_base": base, "imposto": imposto, "repasse": repasse, "usinagem": usinagem, "valor_final": round(valor_final, 2)})
                 salvar_dados(dados)
                 st.success("Produto salvo com sucesso!")
+                if tipo == "Orçamento": 
+                    
 
     elif modo == "Gerenciar Produtos":
         st.subheader("Gerenciar Produtos Cadastrados")
