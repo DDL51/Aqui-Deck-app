@@ -104,6 +104,8 @@ def main():
     dados = carregar_dados()
     modo = st.sidebar.radio("Escolha o modo:", ["Cadastro", "Orçamento", "Gerenciar Produtos"])
 
+    if modo = st.sidebar.radio("Escolha o modo:", ["Cadastro", "Orçamento", "Gerenciar Produtos"])
+    # aqui
     elif modo == "Gerenciar Produtos":
     st.subheader("Gerenciar Produtos Cadastrados")
 
@@ -136,7 +138,11 @@ def main():
             }
             salvar_dados(dados)
             st.success("Produto atualizado com sucesso!")
+    
 
+    
+        # ......MODO ORÇAMENTO 
+    
     elif modo == "Orçamento":
         st.subheader("Orçamento para Cliente")
         nome_cliente = st.text_input("Nome do Cliente")
