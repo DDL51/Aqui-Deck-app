@@ -119,7 +119,7 @@ def main():
         elif tipo == "Produto":
             nome = st.text_input("Nome do Produto")
             base = st.number_input("Valor Base (R$)", min_value= None)
-            imposto = st.number_input("Imposto (%)", min_value=0.0, format="%.2f")
+            imposto = st.number_input("Imposto (%)", min_value=0.0, format=None)
             repasse = st.number_input("Repasse (R$)", min_value=0.0, format="%.2f")
             usinagem = st.number_input("Usinagem (R$)", min_value=0.0, format="%.2f")
 
