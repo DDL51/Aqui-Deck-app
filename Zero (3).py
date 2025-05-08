@@ -102,13 +102,9 @@ def main():
     st.title("AQUI-DECK App")
 
     dados = carregar_dados()
-    modo = st.sidebar.radio("Escolha o modo:", ["Cadastro", "Orçamento", "Gerenciar Produtos"])
-
     if modo = st.sidebar.radio("Escolha o modo:", ["Cadastro", "Orçamento", "Gerenciar Produtos"])
-    # aqui
     elif modo == "Gerenciar Produtos":
     st.subheader("Gerenciar Produtos Cadastrados")
-
     if not dados["Produtos"]:
         st.info("Nenhum produto cadastrado.")
     else:
