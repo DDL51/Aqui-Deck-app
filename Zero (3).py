@@ -102,6 +102,27 @@ def main():
     st.title("AQUI-DECK App")
 
     dados = carregar_dados()
+    import streamlit as st
+import json
+import os
+
+ARQUIVO_DADOS = "dados.json"
+
+def carregar_dados():
+    if os.path.exists(ARQUIVO_DADOS):
+        with open(ARQUIVO_DADOS, "r") as f:
+            return json.load(f)
+    return {"Fixos": [], "Produtos": []}
+
+def salvar_dados(dados):
+    with open(ARQUIVO_DADOS, "w") as f:
+        json.dump(dados, f, indent=4)
+
+# APP PRINCIPAL --------
+def main():
+    st.title("AQUI-DECK App")
+
+    dados = carregar_dados()
     modo = st.sidebar.radio("Escolha o modo:", ["Cadastro", "Orçamento", "Gerenciar Produtos"])
 
     if modo == "Cadastro":
@@ -157,23 +178,26 @@ def main():
             novo_usinagem = st.number_input("Usinagem (R$)", value=produto["usinagem"], min_value=0.0, format="%.2f")
             st.markdown(f"**Valor Final Atual: R$ {produto['valor_final']:.2f}**")
 
-            if st.button("Atualizar Produto"):
-                valor_final = novo_base + (novo_base * novo_imposto / 100) + novo_repasse + novo_usinagem
-                dados["Produtos"][index_produto] = {
-                    "nome": novo_nome,
-                    "valor_base": novo_base,
-                    "imposto": novo_imposto,
-                    "repasse": novo_repasse,
-                    "usinagem": novo_usinagem,
-                    "valor_final": round(valor_final, 2)
-                }
-             if st.button("Excluir Produto"):
-    dados["Produtos"].pop(index_produto)
-    salvar_dados(dados)
-    st.success("Produto excluído com sucesso!")
-    st.experimental_rerun()  # Atualiza a interface para refletir a exclusão
-                salvar_dados(dados)
-                st.success("Produto atualizado com sucesso!")
+            col1, col2 = st.columns(2)
+            with col1:
+                if st.button("Atualizar Produto"):
+                    valor_final = novo_base + (novo_base * novo_imposto / 100) + novo_repasse + novo_usinagem
+                    dados["Produtos"][index_produto] = {
+                        "nome": novo_nome,
+                        "valor_base": novo_base,
+                        "imposto": novo_imposto,
+                        "repasse": novo_repasse,
+                        "usinagem": novo_usinagem,
+                        "valor_final": round(valor_final, 2)
+                    }
+                    salvar_dados(dados)
+                    st.success("Produto atualizado com sucesso!")
+            with col2:
+                if st.button("Excluir Produto"):
+                    dados["Produtos"].pop(index_produto)
+                    salvar_dados(dados)
+                    st.success("Produto excluído com sucesso!")
+                    st.experimental_rerun()  # Atualiza a interface para refletir a exclusão
 
     elif modo == "Orçamento":
         st.subheader("Orçamento para Cliente")
