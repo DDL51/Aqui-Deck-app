@@ -1,4 +1,4 @@
-seimport streamlit as st
+import streamlit as st
 import json
 import os
 from fpdf import FPDF
