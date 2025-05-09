@@ -102,9 +102,6 @@ def main():
     st.title("AQUI-DECK App")
 
     dados = carregar_dados()
-    import streamlit as st
-import json
-import os
 
 ARQUIVO_DADOS = "dados.json"
 
@@ -115,12 +112,11 @@ def carregar_dados():
     return {"Fixos": [], "Produtos": []}
 
 def salvar_dados(dados):
-    with open(ARQUIVO_DADOS, "w") as f:
+
         json.dump(dados, f, indent=4)
 
 # APP PRINCIPAL --------
 def main():
-    st.title("AQUI-DECK App")
 
     dados = carregar_dados()
     modo = st.sidebar.radio("Escolha o modo:", ["Cadastro", "Orçamento", "Gerenciar Produtos"])
