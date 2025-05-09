@@ -100,6 +100,7 @@ def enviar_para_drive(caminho_arquivo):
 # APP PRINCIPAL --------
 def main():
     st.title("AQUI-DECK App")
+    
     dados = carregar_dados()
     modo = st.sidebar.radio("Escolha o modo:", ["Cadastro", "Orçamento", "Gerenciar Produtos"])
 
