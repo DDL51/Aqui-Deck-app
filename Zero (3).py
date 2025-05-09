@@ -136,44 +136,93 @@ def main():
                 salvar_dados(dados)
                 st.success("Produto salvo com sucesso!")
 
+    import streamlit as st
+import json
+import os
+
+ARQUIVO_DADOS = "dados.json"
+
+def carregar_dados():
+    if os.path.exists(ARQUIVO_DADOS):
+        with open(ARQUIVO_DADOS, "r") as f:
+            return json.load(f)
+    return {"Fixos": [], "Produtos": []}
+
+def salvar_dados(dados):
+    with open(ARQUIVO_DADOS, "w") as f:
+        json.dump(dados, f, indent=4)
+
+# APP PRINCIPAL --------
+def main():
+    st.title("AQUI-DECK App")
+
+    dados = carregar_dados()
+    modo = st.sidebar.radio("Escolha o modo:", ["Cadastro", "Orçamento", "Gerenciar Produtos"])
+
+    if modo == "Cadastro":
+        st.subheader("Cadastro de Produtos ou Fixos")
+        tipo = st.selectbox("Tipo:", ["Fixo", "Produto", "Alteração"])
+
+        if tipo == "Fixo":
+            nome = st.text_input("Nome do Serviço Fixo")
+            valor = st.number_input("Valor Total (R$)", min_value=0.0, format="%.2f")
+            if st.button("Salvar Serviço Fixo") and nome.strip():
+                dados["Fixos"].append({"nome": nome, "valor": valor})
+                salvar_dados(dados)
+                st.success("Serviço salvo com sucesso!")
+
+        elif tipo == "Produto":
+            nome = st.text_input("Nome do Produto")
+            base = st.number_input("Valor Base (R$)", min_value=0.0, format="%.2f")
+            imposto = st.number_input("Imposto (%)", min_value=0.0, format="%.2f")
+            repasse = st.number_input("Repasse (R$)", min_value=0.0, format="%.2f")
+            usinagem = st.number_input("Usinagem (R$)", min_value=0.0, format="%.2f")
+
+            if st.button("Salvar Produto") and nome.strip():
+                valor_final = base + (base * imposto / 100) + repasse + usinagem
+                dados["Produtos"].append({
+                    "nome": nome,
+                    "valor_base": base,
+                    "imposto": imposto,
+                    "repasse": repasse,
+                    "usinagem": usinagem,
+                    "valor_final": round(valor_final, 2)
+                })
+                salvar_dados(dados)
+                st.success("Produto salvo com sucesso!")
+
     elif modo == "Gerenciar Produtos":
         st.subheader("Gerenciar Produtos Cadastrados")
 
         if not dados["Produtos"]:
             st.info("Nenhum produto cadastrado.")
         else:
-            elif modo == "Gerenciar Produtos":
-    st.subheader("Gerenciar Produtos Cadastrados")
+            # Lista de nomes para o selectbox
+            nomes_produtos = [p["nome"] for p in dados["Produtos"]]
+            index_produto = st.selectbox("Selecione um produto para editar", range(len(nomes_produtos)),
+                                         format_func=lambda i: nomes_produtos[i])
 
-    if not dados["Produtos"]:
-        st.info("Nenhum produto cadastrado.")
-    else:
-        # Lista de nomes para o selectbox
-        nomes_produtos = [p["nome"] for p in dados["Produtos"]]
-        index_produto = st.selectbox("Selecione um produto para editar", range(len(nomes_produtos)),
-                                     format_func=lambda i: nomes_produtos[i])
+            produto = dados["Produtos"][index_produto]
 
-        produto = dados["Produtos"][index_produto]
+            # Campos de edição
+            novo_nome = st.text_input("Nome do Produto", value=produto["nome"])
+            novo_base = st.number_input("Valor Base (R$)", value=produto["valor_base"], min_value=0.0, format="%.2f")
+            novo_imposto = st.number_input("Imposto (%)", value=produto["imposto"], min_value=0.0, format="%.2f")
+            novo_repasse = st.number_input("Repasse (R$)", value=produto["repasse"], min_value=0.0, format="%.2f")
+            novo_usinagem = st.number_input("Usinagem (R$)", value=produto["usinagem"], min_value=0.0, format="%.2f")
 
-        # Campos de edição
-        novo_nome = st.text_input("Nome do Produto", value=produto["nome"])
-        novo_base = st.number_input("Valor Base (R$)", value=produto["valor_base"], min_value=0.0, format="%.2f")
-        novo_imposto = st.number_input("Imposto (%)", value=produto["imposto"], min_value=0.0, format="%.2f")
-        novo_repasse = st.number_input("Repasse (R$)", value=produto["repasse"], min_value=0.0, format="%.2f")
-        novo_usinagem = st.number_input("Usinagem (R$)", value=produto["usinagem"], min_value=0.0, format="%.2f")
-
-        if st.button("Atualizar Produto"):
-            valor_final = novo_base + (novo_base * novo_imposto / 100) + novo_repasse + novo_usinagem
-            dados["Produtos"][index_produto] = {
-                "nome": novo_nome,
-                "valor_base": novo_base,
-                "imposto": novo_imposto,
-                "repasse": novo_repasse,
-                "usinagem": novo_usinagem,
-                "valor_final": round(valor_final, 2)
-            }
-            salvar_dados(dados)
-            st.success("Produto atualizado com sucesso!")
+            if st.button("Atualizar Produto"):
+                valor_final = novo_base + (novo_base * novo_imposto / 100) + novo_repasse + novo_usinagem
+                dados["Produtos"][index_produto] = {
+                    "nome": novo_nome,
+                    "valor_base": novo_base,
+                    "imposto": novo_imposto,
+                    "repasse": novo_repasse,
+                    "usinagem": novo_usinagem,
+                    "valor_final": round(valor_final, 2)
+                }
+                salvar_dados(dados)
+                st.success("Produto atualizado com sucesso!")
 
     elif modo == "Orçamento":
         st.subheader("Orçamento para Cliente")
