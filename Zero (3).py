@@ -96,28 +96,10 @@ def enviar_para_drive(caminho_arquivo):
     except Exception as e:
         st.error(f"Erro ao enviar para o Google Drive: {e}")
         return False
-
+    
 # APP PRINCIPAL --------
 def main():
     st.title("AQUI-DECK App")
-
-    dados = carregar_dados()
-
-ARQUIVO_DADOS = "dados.json"
-
-def carregar_dados():
-    if os.path.exists(ARQUIVO_DADOS):
-        with open(ARQUIVO_DADOS, "r") as f:
-            return json.load(f)
-    return {"Fixos": [], "Produtos": []}
-
-def salvar_dados(dados):
-
-        json.dump(dados, f, indent=4)
-
-# APP PRINCIPAL --------
-def main():
-
     dados = carregar_dados()
     modo = st.sidebar.radio("Escolha o modo:", ["Cadastro", "Orçamento", "Gerenciar Produtos"])
 
