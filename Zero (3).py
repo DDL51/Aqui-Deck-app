@@ -99,7 +99,7 @@ def enviar_para_drive(caminho_arquivo):
     
 # APP PRINCIPAL --------
 def main():
-    st.title("AQUI-DECK App")
+    st.title("AQUI-DECK")
     
     dados = carregar_dados()
     modo = st.sidebar.radio("Escolha o modo:", ["Cadastro", "Orçamento", "Gerenciar Produtos"])
@@ -155,7 +155,7 @@ def main():
             novo_imposto = st.number_input("Imposto (%)", value=produto["imposto"], min_value=0.0, format="%.2f")
             novo_repasse = st.number_input("Repasse (R$)", value=produto["repasse"], min_value=0.0, format="%.2f")
             novo_usinagem = st.number_input("Usinagem (R$)", value=produto["usinagem"], min_value=0.0, format="%.2f")
-            st.markdown(f"**Valor Final Atual: R$ {produto['valor_final']:.2f}**")
+            st.markdown(f"<span style='color:red; font-weight:bold;'>Valor Final Atual: R$ {produto['valor_final']:.2f}</span>", unsafe_allow_html=True)
 
             col1, col2 = st.columns(2)
             with col1:
