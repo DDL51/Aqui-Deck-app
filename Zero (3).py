@@ -156,6 +156,10 @@ def main():
             novo_repasse = st.number_input("Repasse (R$)", value=produto["repasse"], min_value=0.0, format="%.2f")
             novo_usinagem = st.number_input("Usinagem (R$)", value=produto["usinagem"], min_value=0.0, format="%.2f")
             st.markdown(f"<span style='color:red; font-weight:bold;'>Valor Final Atual: R$ {produto['valor_final']:.2f}</span>", unsafe_allow_html=True)
+            st.markdown(
+    f"<div style='color: red; font-weight: bold;'>Valor Final Atual: R$ {produto['valor_final']:.2f}</div>",
+    unsafe_allow_html=True
+            )
 
             col1, col2 = st.columns(2)
             with col1:
