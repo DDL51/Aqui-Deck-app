@@ -167,6 +167,11 @@ def main():
                     "usinagem": novo_usinagem,
                     "valor_final": round(valor_final, 2)
                 }
+                if st.button("Excluir Produto"):
+    dados["Produtos"].pop(index_produto)
+    salvar_dados(dados)
+    st.success("Produto excluído com sucesso!")
+    st.experimental_rerun()  # Atualiza a interface para refletir a exclusão
                 salvar_dados(dados)
                 st.success("Produto atualizado com sucesso!")
 
