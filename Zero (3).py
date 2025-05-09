@@ -155,7 +155,7 @@ def main():
             novo_imposto = st.number_input("Imposto (%)", value=produto["imposto"], min_value=0.0, format="%.2f")
             novo_repasse = st.number_input("Repasse (R$)", value=produto["repasse"], min_value=0.0, format="%.2f")
             novo_usinagem = st.number_input("Usinagem (R$)", value=produto["usinagem"], min_value=0.0, format="%.2f")
-            st.markdown(f"**Valor Final Atual: R$ {produto['valor_final']:.2f}**")
+            novo_valor = st.markdown(f"**Valor Final Atual: R$ {produto['valor_final']:.2f}**")
 
             if st.button("Atualizar Produto"):
                 valor_final = novo_base + (novo_base * novo_imposto / 100) + novo_repasse + novo_usinagem
