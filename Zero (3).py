@@ -231,23 +231,11 @@ def main():
             st.write(f"**Total Geral: R$ {total_geral:.2f}**")
 
             if st.button("Salvar Orçamento e Enviar"):
-                if nome_cliente.strip() and contato.strip():
-                    arquivo = gerar_pdf(nome_cliente, contato, bairro, st.session_state.itens, total_geral)
-                    sucesso = enviar_para_drive(arquivo)
-                    if sucesso:
-                        st.success("Orçamento salvo e PDF enviado para o Google Drive!")
-                        st.session_state.itens = []
-                else:
-                    st.warning("Preencha nome do cliente e contato para salvar o PDF.")
-                    st.subheader("Novo Orçamento")
+    if nome_cliente.strip() and contato.strip():
+        arquivo = gerar_pdf(nome_cliente, contato, bairro, st.session_state.itens, total_geral)
+        sucesso = enviar_para_drive(arquivo)
 
-    # ... campos de entrada e cálculo ...
-
-    if st.button("Salvar Orçamento e Enviar"):
-        if nome_cliente.strip() and contato.strip():
-            # gerar PDF e enviar para Drive...
-
-            # salvar também no JSON
+        if sucesso:
             orcamentos = carregar_orcamentos()
             novo_orcamento = {
                 "nome_cliente": nome_cliente,
@@ -262,8 +250,7 @@ def main():
 
             st.success("Orçamento salvo e PDF enviado para o Google Drive!")
             st.session_state.itens = []
-        else:
-            st.warning("Preencha nome do cliente e contato.")
-
+    else:
+        st.warning("Preencha nome do cliente e contato.")
 if __name__ == "__main__":
     main()
