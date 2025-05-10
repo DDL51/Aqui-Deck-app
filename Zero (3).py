@@ -239,9 +239,7 @@ def main():
                         st.session_state.itens = []
                 else:
                     st.warning("Preencha nome do cliente e contato para salvar o PDF.")
-
-                elif modo == "Orçamento":
-    st.subheader("Novo Orçamento")
+                    st.subheader("Novo Orçamento")
 
     # ... campos de entrada e cálculo ...
 
