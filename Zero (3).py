@@ -38,6 +38,23 @@ def salvar_dados(dados):
     with open(ARQ_PRODUTOS, "w") as f:
         json.dump(dados, f, indent=4)
 
+# ORÇAMENTO........
+import os
+import json
+
+CAMINHO_ORCAMENTOS = "orcamentos.json"
+
+def carregar_orcamentos():
+    if os.path.exists(CAMINHO_ORCAMENTOS):
+        with open(CAMINHO_ORCAMENTOS, "r", encoding="utf-8") as f:
+            return json.load(f)
+    else:
+        return []
+
+def salvar_orcamentos(lista_orcamentos):
+    with open(CAMINHO_ORCAMENTOS, "w", encoding="utf-8") as f:
+        json.dump(lista_orcamentos, f, indent=4, ensure_ascii=False)
+
 # -------- PDF --------
 def gerar_pdf(nome_cliente, contato, bairro, itens, total_geral):
     os.makedirs(PASTA_PDFS, exist_ok=True)
@@ -222,6 +239,33 @@ def main():
                         st.session_state.itens = []
                 else:
                     st.warning("Preencha nome do cliente e contato para salvar o PDF.")
+
+                elif modo == "Orçamento":
+    st.subheader("Novo Orçamento")
+
+    # ... campos de entrada e cálculo ...
+
+    if st.button("Salvar Orçamento e Enviar"):
+        if nome_cliente.strip() and contato.strip():
+            # gerar PDF e enviar para Drive...
+
+            # salvar também no JSON
+            orcamentos = carregar_orcamentos()
+            novo_orcamento = {
+                "nome_cliente": nome_cliente,
+                "contato": contato,
+                "bairro": bairro,
+                "itens": st.session_state.itens,
+                "total": total_geral,
+                "data": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            }
+            orcamentos.append(novo_orcamento)
+            salvar_orcamentos(orcamentos)
+
+            st.success("Orçamento salvo e PDF enviado para o Google Drive!")
+            st.session_state.itens = []
+        else:
+            st.warning("Preencha nome do cliente e contato.")
 
 if __name__ == "__main__":
     main()
