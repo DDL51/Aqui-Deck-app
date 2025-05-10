@@ -123,7 +123,7 @@ def main():
 
     if modo == "Cadastro":
         st.subheader("Cadastro de Produtos ou Fixos")
-        tipo = st.selectbox("Tipo:", ["Fixo", "Produto", "Alteração"])
+        tipo = st.selectbox("Tipo:", ["Fixo", "Produto",])
 
         if tipo == "Fixo":
             nome = st.text_input("Nome do Serviço Fixo")
@@ -133,7 +133,7 @@ def main():
                 salvar_dados(dados)
                 st.success("Serviço salvo com sucesso!")
 
-        elif tipo == "Produto":
+    elif tipo == "Produto":
             nome = st.text_input("Nome do Produto")
             base = st.number_input("Valor Base (R$)", min_value=0.0, format="%.2f")
             imposto = st.number_input("Imposto (%)", min_value=0.0, format="%.2f")
@@ -158,7 +158,7 @@ def main():
 
         if not dados["Produtos"]:
             st.info("Nenhum produto cadastrado.")
-        else:
+    else:
             # Lista de nomes para o selectbox
             nomes_produtos = [p["nome"] for p in dados["Produtos"]]
             index_produto = st.selectbox("Selecione um produto para editar", range(len(nomes_produtos)),
