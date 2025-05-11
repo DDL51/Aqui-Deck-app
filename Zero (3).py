@@ -211,8 +211,8 @@ def main():
             st.subheader("Itens do Pedido")
             total_geral = sum(i["total"] for i in st.session_state.itens)
             for i, item in enumerate(st.session_state.itens):
-                st.write(f"{i+1}. {item['produto']} - Qtd: {item['qtd']} - Comp: {item['comp']} mm - Total: R$ {item['total']:.2f}")
-                st.write(f"**Total Geral: R$ {total_geral:.2f}**")
+            st.write(f"{i+1}. {item['produto']} - Qtd: {item['qtd']} - Comp: {item['comp']} mm - Total: R$ {item['total']:.2f}")
+            st.write(f"**Total Geral: R$ {total_geral:.2f}**")
 
         if st.button("Salvar Orçamento e Enviar"):
             if nome_cliente.strip() and contato.strip():
@@ -226,7 +226,7 @@ def main():
                     salvar_orcamentos(orcamentos)
                     st.success("Orçamento salvo e PDF enviado para o Google Drive!")
                     st.session_state.itens = []
-                else:
-                    st.warning("Preencha nome do cliente e contato.")
+            else:
+                st.warning("Preencha nome do cliente e contato.")
 if __name__ == "__main__":
     main()
