@@ -153,7 +153,7 @@ def main():
                 salvar_dados(dados)
                 st.success("Produto salvo com sucesso!")
 
-    elif modo == "Gerenciar Produtos":
+     elif modo == "Gerenciar Produtos":
         st.subheader("Gerenciar Produtos Cadastrados")
 
         if not dados["Produtos"]:
@@ -195,7 +195,8 @@ def main():
                     salvar_dados(dados)
                     st.success("Produto excluído com sucesso!")
                     st.experimental_rerun()  # Atualiza a interface para refletir a exclusão
-    elif modo == "Orçamento":
+    
+     elif modo == "Orçamento":
         st.subheader("Orçamento para Cliente")
         nome_cliente = st.text_input("Nome do Cliente")
         contato = st.text_input("Contato")
@@ -230,9 +231,9 @@ def main():
             st.write(f"**Total Geral: R$ {total_geral:.2f}**")
 
             if st.button("Salvar Orçamento e Enviar"):
-    if nome_cliente.strip() and contato.strip():
-        arquivo = gerar_pdf(nome_cliente, contato, bairro, st.session_state.itens, total_geral)
-        sucesso = enviar_para_drive(arquivo)
+        if nome_cliente.strip() and contato.strip():
+           arquivo = gerar_pdf(nome_cliente, contato, bairro, st.session_state.itens, total_geral)
+           sucesso = enviar_para_drive(arquivo)
 
         if sucesso:
             orcamentos = carregar_orcamentos()
