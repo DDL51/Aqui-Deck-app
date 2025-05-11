@@ -206,11 +206,10 @@ def main():
             valor_unit = next((p["valor_final"] for p in dados["Produtos"] if p["nome"] == produto_sel), 0)
             total = (qtd * comp / 1000) * valor_unit
             st.session_state.itens.append({
-            "produto": produto_sel,
-            "qtd": qtd,
-            "comp": comp,
-            "valor_unit": valor_unit,
-            "total": total})
+"produto": produto_sel,
+"qtd": qtd,"comp": comp,
+"valor_unit": valor_unit,
+"total": total})
             st.success(f"{produto_sel} adicionado ao pedido!")
 
         if st.session_state.itens:
@@ -228,13 +227,12 @@ def main():
                 if sucesso:
                     orcamentos = carregar_orcamentos()
                     novo_orcamento = {
-                        "nome_cliente": nome_cliente,
-                        "contato": contato,
-                        "bairro": bairro,
-                        "itens": st.session_state.itens,
-                        "total": total_geral,
-                        "data": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                    }
+"nome_cliente": nome_cliente,
+"contato": contato,
+"bairro": bairro,
+"itens": st.session_state.itens,
+"total": total_geral,
+"data": datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
                     orcamentos.append(novo_orcamento)
                     salvar_orcamentos(orcamentos)
 
