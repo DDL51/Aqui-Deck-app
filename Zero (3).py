@@ -159,18 +159,18 @@ def main():
         # (mantenha aqui a lógica atual de gerenciamento de produtos)
         if not dados["Produtos"]:
             st.info("Nenhum produto cadastrado.")
-        else:
-            nomes_produtos = [p["nome"] for p in dados["Produtos"]]
-            index_produto = st.selectbox("Selecione um produto para editar", options=range(len(nomes_produtos)), format_func=lambda i: nomes_produtos[i])
-            produto = dados["Produtos"][index_produto]
+            else:
+                nomes_produtos = [p["nome"] for p in dados["Produtos"]]
+                index_produto = st.selectbox("Selecione um produto para editar", options=range(len(nomes_produtos)), format_func=lambda i: nomes_produtos[i])
+                produto = dados["Produtos"][index_produto]
 
-            novo_nome = st.text_input("Nome do Produto", value=produto["nome"])
-            novo_base = st.number_input("Valor Base (R$)", value=produto["valor_base"], min_value=0.0, format="%.2f")
-            novo_imposto = st.number_input("Imposto (%)", value=produto["imposto"], min_value=0.0, format="%.2f")
-            novo_repasse = st.number_input("Repasse (R$)", value=produto["repasse"], min_value=0.0, format="%.2f")
-            novo_usinagem = st.number_input("Usinagem (R$)", value=produto["usinagem"], min_value=0.0, format="%.2f")
+                novo_nome = st.text_input("Nome do Produto", value=produto["nome"])
+                novo_base = st.number_input("Valor Base (R$)", value=produto["valor_base"], min_value=0.0, format="%.2f")
+                novo_imposto = st.number_input("Imposto (%)", value=produto["imposto"], min_value=0.0, format="%.2f")
+                novo_repasse = st.number_input("Repasse (R$)", value=produto["repasse"], min_value=0.0, format="%.2f")
+                novo_usinagem = st.number_input("Usinagem (R$)", value=produto["usinagem"], min_value=0.0, format="%.2f")
 
-            st.markdown(f"<span style='color:red; font-weight:bold;'>Valor Final Atual: R$ {produto['valor_final']:.2f}</span>", unsafe_allow_html=True)
+                st.markdown(f"<span style='color:red; font-weight:bold;'>Valor Final Atual: R$ {produto['valor_final']:.2f}</span>", unsafe_allow_html=True)
 
             col1, col2 = st.columns(2)
             with col1:
