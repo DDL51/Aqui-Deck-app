@@ -140,8 +140,8 @@ def main():
         usinagem = st.number_input("Usinagem (R$)", min_value=0.0, format="%.2f")
 
             if st.button("Salvar Produto") and nome.strip():
-                valor_final = base + (base * imposto / 100) + repasse + usinagem
-                dados["Produtos"].append({
+              valor_final = base + (base * imposto / 100) + repasse + usinagem
+              dados["Produtos"].append({
                     "nome": nome,
                     "valor_base": base,
                     "imposto": imposto,
