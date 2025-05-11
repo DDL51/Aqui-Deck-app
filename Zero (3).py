@@ -153,29 +153,29 @@ def main():
 #Inicio das alterações 
         
     elif modo == "Gerenciar":
-    sub_modo = st.radio("O que deseja gerenciar?", ["Produtos", "Orçamentos"])
+        sub_modo = st.radio("O que deseja gerenciar?", ["Produtos", "Orçamentos"])
 
-    if sub_modo == "Produtos":
+        if sub_modo == "Produtos":
         # (mantenha aqui a lógica atual de gerenciamento de produtos)
-        if not dados["Produtos"]:
-            st.info("Nenhum produto cadastrado.")
-        else:
-            produto_selecionado = st.selectbox("Selecione o produto para editar ou excluir:", list(dados["Produtos"].keys()))
-            novo_nome = st.text_input("Novo nome do produto", value=produto_selecionado)
-            novo_preco = st.number_input("Novo preço por metro", min_value=0.0, format="%.2f", value=dados["Produtos"][produto_selecionado])
+            if not dados["Produtos"]:
+                st.info("Nenhum produto cadastrado.")
+            else:
+                produto_selecionado = st.selectbox("Selecione o produto para editar ou excluir:", list(dados["Produtos"].keys()))
+                novo_nome = st.text_input("Novo nome do produto", value=produto_selecionado)
+                novo_preco = st.number_input("Novo preço por metro", min_value=0.0, format="%.2f", value=dados["Produtos"][produto_selecionado])
 
-            if st.button("Atualizar Produto"):
-                if novo_nome != produto_selecionado:
-                    dados["Produtos"][novo_nome] = dados["Produtos"].pop(produto_selecionado)
-                dados["Produtos"][novo_nome] = novo_preco
-                salvar_dados(dados)
-                st.success("Produto atualizado com sucesso!")
+                if st.button("Atualizar Produto"):
+                    if novo_nome != produto_selecionado:
+                        dados["Produtos"][novo_nome] = dados["Produtos"].pop(produto_selecionado)
+                    dados["Produtos"][novo_nome] = novo_preco
+                    salvar_dados(dados)
+                    st.success("Produto atualizado com sucesso!")
 
-            if st.button("Excluir Produto"):
-                dados["Produtos"].pop(produto_selecionado)
-                salvar_dados(dados)
-                st.success("Produto excluído com sucesso!")
-                st.experimental_rerun()
+                if st.button("Excluir Produto"):
+                    dados["Produtos"].pop(produto_selecionado)
+                    salvar_dados(dados)
+                    st.success("Produto excluído com sucesso!")
+                    st.experimental_rerun()
 
     elif sub_modo == "Orçamentos":
         orcamentos = carregar_orcamentos()
