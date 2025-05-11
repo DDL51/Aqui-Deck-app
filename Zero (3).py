@@ -155,13 +155,15 @@ def main():
 
         if not dados["Produtos"]:
             st.info("Nenhum produto cadastrado.")
+            
+    # Lista de nomes para o selectbox   
     else:
-        # Lista de nomes para o selectbox
-        nomes_produtos = [p["nome"] for p in dados["Produtos"]]
-        index_produto = st.selectbox("Selecione um produto para editar", range(len(nomes_produtos)))
-        format_func=lambda i: nomes_produtos[i],user_data=nomes_produtos,parent=janela_principal                            
-        produto = dados["Produtos"][index_produto]
-
+        index_produto = st.selectbox(
+    "Selecione um produto para editar",
+    options=range(len(nomes_produtos)),
+    format_func=lambda i: nomes_produtos[i]
+        )
+        
         # Campos de edição
         novo_nome = st.text_input("Nome do Produto", value=produto["nome"])
         novo_base = st.number_input("Valor Base (R$)", value=produto["valor_base"], min_value=0.0, format="%.2f")
