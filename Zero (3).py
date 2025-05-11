@@ -158,7 +158,7 @@ def main():
     else:
         # Lista de nomes para o selectbox
         nomes_produtos = [p["nome"] for p in dados["Produtos"]]
-        index_produto = st.selectbox("Selecione um produto para editar", range(len(nomes_produtos))
+        index_produto = st.selectbox("Selecione um produto para editar", range(len(nomes_produtos)))
         format_func=lambda i: nomes_produtos[i],user_data=nomes_produtos,parent=janela_principal)                             
         produto = dados["Produtos"][index_produto]
 
