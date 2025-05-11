@@ -189,10 +189,10 @@ def main():
             st.experimental_rerun()
                 
     elif modo == "Orçamento":
-    st.subheader("Orçamento para Cliente")
-    nome_cliente = st.text_input("Nome do Cliente")
-    contato = st.text_input("Contato")
-    bairro = st.text_input("Bairro")
+        st.subheader("Orçamento para Cliente")
+        nome_cliente = st.text_input("Nome do Cliente")
+        contato = st.text_input("Contato")
+        bairro = st.text_input("Bairro")
 
         if "itens" not in st.session_state:
             st.session_state.itens = []
@@ -210,16 +210,15 @@ def main():
             "qtd": qtd,
             "comp": comp,
             "valor_unit": valor_unit,
-            "total": total
-        })
+            "total": total})
             st.success(f"{produto_sel} adicionado ao pedido!")
 
         if st.session_state.itens:
             st.subheader("Itens do Pedido")
             total_geral = sum(i["total"] for i in st.session_state.itens)
-        for i, item in enumerate(st.session_state.itens):
-            st.write(f"{i+1}. {item['produto']} - Qtd: {item['qtd']} - Comp: {item['comp']} mm - Total: R$ {item['total']:.2f}")
-        st.write(f"**Total Geral: R$ {total_geral:.2f}**")
+            for i, item in enumerate(st.session_state.itens):
+                st.write(f"{i+1}. {item['produto']} - Qtd: {item['qtd']} - Comp: {item['comp']} mm - Total: R$ {item['total']:.2f}")
+                st.write(f"**Total Geral: R$ {total_geral:.2f}**")
 
         if st.button("Salvar Orçamento e Enviar"):
             if nome_cliente.strip() and contato.strip():
