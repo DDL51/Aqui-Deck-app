@@ -151,7 +151,7 @@ def main():
             st.success("Produto salvo com sucesso!")
 
     elif modo == "Gerenciar Produtos":
-    st.subheader("Gerenciar Produtos Cadastrados")
+        st.subheader("Gerenciar Produtos Cadastrados")
 
     if not dados["Produtos"]:
         st.info("Nenhum produto cadastrado.")
