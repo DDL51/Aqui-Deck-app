@@ -150,9 +150,69 @@ def main():
                         "valor_final": round(valor_final, 2)})
                 salvar_dados(dados)
                 st.success("Produto salvo com sucesso!")
-
+#Inicio das alterações 
     elif modo == "Gerenciar Produtos":
         st.subheader("Gerenciar Produtos Cadastrados")
+    elif sub_modo == "Orçamentos":
+    orcamentos = carregar_orcamentos()
+    if not orcamentos:
+        st.info("Nenhum orçamento salvo.")
+    else:
+        indices = [f"{i+1} - {o['nome_cliente']} ({o['data']})" for i, o in enumerate(orcamentos)]
+        index = st.selectbox("Selecione um orçamento:", range(len(orcamentos)), format_func=lambda i: indices[i])
+        orc = orcamentos[index]
+
+        st.subheader("Editar Orçamento")
+        nome_cliente = st.text_input("Nome do Cliente", value=orc["nome_cliente"])
+        contato = st.text_input("Contato", value=orc["contato"])
+        bairro = st.text_input("Bairro", value=orc["bairro"])
+
+        st.subheader("Itens do Orçamento")
+        itens_remover = []
+
+        for i, item in enumerate(orc["itens"]):
+            st.markdown(f"**Item {i+1}**")
+            col1, col2, col3, col4 = st.columns([3, 2, 2, 1])
+            with col1:
+                item["produto"] = st.selectbox(f"Produto {i+1}", list(dados["Produtos"].keys()), key=f"produto_{i}", index=list(dados["Produtos"].keys()).index(item["produto"]) if item["produto"] in dados["Produtos"] else 0)
+            with col2:
+                item["quantidade"] = st.number_input(f"Qtd {i+1}", min_value=1, value=item["quantidade"], key=f"quantidade_{i}")
+            with col3:
+                item["comprimento"] = st.number_input(f"Comp (m) {i+1}", min_value=0.0, value=item["comprimento"], key=f"comprimento_{i}", format="%.2f")
+            with col4:
+                if st.button("Excluir", key=f"excluir_{i}"):
+                    itens_remover.append(i)
+
+        # Remove itens marcados
+        for i in sorted(itens_remover, reverse=True):
+            orc["itens"].pop(i)
+            st.warning(f"Item {i+1} removido.")
+
+        if st.button("Adicionar Item"):
+            if dados["Produtos"]:
+                novo_item = {
+                    "produto": list(dados["Produtos"].keys())[0],
+                    "quantidade": 1,
+                    "comprimento": 1.0
+                }
+                orc["itens"].append(novo_item)
+                st.experimental_rerun()
+            else:
+                st.error("Nenhum produto disponível para adicionar.")
+
+        if st.button("Atualizar Orçamento"):
+            orc["nome_cliente"] = nome_cliente
+            orc["contato"] = contato
+            orc["bairro"] = bairro
+            salvar_orcamentos(orcamentos)
+            st.success("Orçamento atualizado com sucesso!")
+
+        if st.button("Excluir Orçamento"):
+            orcamentos.pop(index)
+            salvar_orcamentos(orcamentos)
+            st.success("Orçamento excluído com sucesso!")
+            st.experimental_rerun()
+#Fim das alterações      
 
         if not dados["Produtos"]:
             st.info("Nenhum produto cadastrado.")
