@@ -120,7 +120,6 @@ def main():
     
     dados = carregar_dados()
     modo = st.sidebar.radio("Escolha o modo:", ["Cadastro", "Orçamento", "Gerenciar Produtos"])
-
     if modo == "Cadastro":
         st.subheader("Cadastro de Produtos ou Fixos")
         tipo = st.selectbox("Tipo:", ["Fixo", "Produto",])
@@ -250,7 +249,7 @@ def main():
 
             st.success("Orçamento salvo e PDF enviado para o Google Drive!")
             st.session_state.itens = []
-    else:
+            else:
         st.warning("Preencha nome do cliente e contato.")
 if __name__ == "__main__":
     main()
