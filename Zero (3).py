@@ -159,7 +159,7 @@ def main():
         # Lista de nomes para o selectbox
         nomes_produtos = [p["nome"] for p in dados["Produtos"]]
         index_produto = st.selectbox("Selecione um produto para editar", range(len(nomes_produtos)),
-        format_func=lambda i: nomes_produtos[i
+        format_func=lambda i: nomes_produtos[i]
         produto = dados["Produtos"][index_produto]
 
         # Campos de edição
