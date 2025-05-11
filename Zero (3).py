@@ -133,7 +133,7 @@ def main():
                 salvar_dados(dados)
                 st.success("Serviço salvo com sucesso!")
 
-    elif tipo == "Produto":
+        elif tipo == "Produto":
             nome = st.text_input("Nome do Produto")
             base = st.number_input("Valor Base (R$)", min_value=0.0, format="%.2f")
             imposto = st.number_input("Imposto (%)", min_value=0.0, format="%.2f")
@@ -196,7 +196,7 @@ def main():
                     st.success("Produto excluído com sucesso!")
                     st.experimental_rerun()  # Atualiza a interface para refletir a exclusão
 
-    elif modo == "Orçamento":
+     elif modo == "Orçamento":
         st.subheader("Orçamento para Cliente")
         nome_cliente = st.text_input("Nome do Cliente")
         contato = st.text_input("Contato")
