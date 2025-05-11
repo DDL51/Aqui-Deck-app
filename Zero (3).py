@@ -157,9 +157,7 @@ def main():
             st.info("Nenhum produto cadastrado.")
     else:
         nomes_produtos = [p["nome"] for p in dados["Produtos"]]  # você precisa garantir que isso exista
-        index_produto = st.selectbox(
-        "Selecione um produto para editar",
-        options=range(len(nomes_produtos)),
+        index_produto = st.selectbox("Selecione um produto para editar",options=range(len(nomes_produtos))
         format_func=lambda i: nomes_produtos[i]
         produto = dados["Produtos"][index_produto]
 
