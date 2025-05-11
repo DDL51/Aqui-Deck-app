@@ -194,29 +194,29 @@ def main():
     contato = st.text_input("Contato")
     bairro = st.text_input("Bairro")
 
-    if "itens" not in st.session_state:
-        st.session_state.itens = []
+        if "itens" not in st.session_state:
+            st.session_state.itens = []
 
-    nomes_produtos = [p["nome"] for p in dados["Produtos"]]
-    produto_sel = st.selectbox("Produto:", nomes_produtos)
-    qtd = st.number_input("Quantidade", min_value=0.0)
-    comp = st.number_input("Comprimento (em mm)", min_value=0.0)
+            nomes_produtos = [p["nome"] for p in dados["Produtos"]]
+            produto_sel = st.selectbox("Produto:", nomes_produtos)
+            qtd = st.number_input("Quantidade", min_value=0.0)
+            comp = st.number_input("Comprimento (em mm)", min_value=0.0)
 
-    if st.button("Adicionar Produto"):
-        valor_unit = next((p["valor_final"] for p in dados["Produtos"] if p["nome"] == produto_sel), 0)
-        total = (qtd * comp / 1000) * valor_unit
-        st.session_state.itens.append({
+        if st.button("Adicionar Produto"):
+            valor_unit = next((p["valor_final"] for p in dados["Produtos"] if p["nome"] == produto_sel), 0)
+            total = (qtd * comp / 1000) * valor_unit
+            st.session_state.itens.append({
             "produto": produto_sel,
             "qtd": qtd,
             "comp": comp,
             "valor_unit": valor_unit,
             "total": total
         })
-        st.success(f"{produto_sel} adicionado ao pedido!")
+            st.success(f"{produto_sel} adicionado ao pedido!")
 
-    if st.session_state.itens:
-        st.subheader("Itens do Pedido")
-        total_geral = sum(i["total"] for i in st.session_state.itens)
+        if st.session_state.itens:
+            st.subheader("Itens do Pedido")
+            total_geral = sum(i["total"] for i in st.session_state.itens)
         for i, item in enumerate(st.session_state.itens):
             st.write(f"{i+1}. {item['produto']} - Qtd: {item['qtd']} - Comp: {item['comp']} mm - Total: R$ {item['total']:.2f}")
         st.write(f"**Total Geral: R$ {total_geral:.2f}**")
