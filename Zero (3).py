@@ -153,8 +153,8 @@ def main():
     elif modo == "Gerenciar Produtos":
         st.subheader("Gerenciar Produtos Cadastrados")
 
-    if not dados["Produtos"]:
-        st.info("Nenhum produto cadastrado.")
+        if not dados["Produtos"]:
+            st.info("Nenhum produto cadastrado.")
     else:
         nomes_produtos = [p["nome"] for p in dados["Produtos"]]  # você precisa garantir que isso exista
         index_produto = st.selectbox(
@@ -171,18 +171,18 @@ def main():
         novo_usinagem = st.number_input("Usinagem (R$)", value=produto["usinagem"], min_value=0.0, format="%.2f")
         st.markdown(f"<span style='color:red; font-weight:bold;'>Valor Final Atual: R$ {produto['valor_final']:.2f}</span>", unsafe_allow_html=True)
         col1, col2 = st.columns(2)
-        with col1:
-            if st.button("Atualizar Produto"):
-                valor_final = novo_base + (novo_base * novo_imposto / 100) + novo_repasse + novo_usinagem
-                dados["Produtos"][index_produto] = {
+    with col1:
+        if st.button("Atualizar Produto"):
+            valor_final = novo_base + (novo_base * novo_imposto / 100) + novo_repasse + novo_usinagem
+            dados["Produtos"][index_produto] = {
                     "nome": novo_nome,
                     "valor_base": novo_base,
                     "imposto": novo_imposto,
                     "repasse": novo_repasse,
                     "usinagem": novo_usinagem,
                     "valor_final": round(valor_final, 2)} 
-                 salvar_dados(dados)
-                 st.success("Produto atualizado com sucesso!")
+            salvar_dados(dados)
+            st.success("Produto atualizado com sucesso!")
     with col2:
         if st.button("Excluir Produto"):
             dados["Produtos"].pop(index_produto)
@@ -243,7 +243,7 @@ def main():
 
             st.success("Orçamento salvo e PDF enviado para o Google Drive!")
             st.session_state.itens = []
-            else:
+    else:
         st.warning("Preencha nome do cliente e contato.")
 if __name__ == "__main__":
     main()
