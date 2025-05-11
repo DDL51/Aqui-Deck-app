@@ -172,7 +172,6 @@ def main():
         novo_repasse = st.number_input("Repasse (R$)", value=produto["repasse"], min_value=0.0, format="%.2f")
         novo_usinagem = st.number_input("Usinagem (R$)", value=produto["usinagem"], min_value=0.0, format="%.2f")
         st.markdown(f"<span style='color:red; font-weight:bold;'>Valor Final Atual: R$ {produto['valor_final']:.2f}</span>", unsafe_allow_html=True)
-
         col1, col2 = st.columns(2)
         with col1:
             if st.button("Atualizar Produto"):
@@ -187,12 +186,12 @@ def main():
                 } 
                 salvar_dados(dados)
                 st.success("Produto atualizado com sucesso!")
-        with col2:
-            if st.button("Excluir Produto"):
-                dados["Produtos"].pop(index_produto)
-                salvar_dados(dados)
-                st.success("Produto excluído com sucesso!")
-                st.experimental_rerun()
+    with col2:
+        if st.button("Excluir Produto"):
+            dados["Produtos"].pop(index_produto)
+            salvar_dados(dados)
+            st.success("Produto excluído com sucesso!")
+            st.experimental_rerun()
                 
     elif modo == "Orçamento": 
         st.subheader("Orçamento para Cliente")
@@ -200,13 +199,12 @@ def main():
         contato = st.text_input("Contato")
         bairro = st.text_input("Bairro")
 
-            if "itens" not in st.session_state:
+        if "itens" not in st.session_state:
             st.session_state.itens = []
-
-        nomes_produtos = [p["nome"] for p in dados["Produtos"]]
-        produto_sel = st.selectbox("Produto:", nomes_produtos)
-        qtd = st.number_input("Quantidade", min_value=0.0)
-        comp = st.number_input("Comprimento (em mm)", min_value=0.0)
+            nomes_produtos = [p["nome"] for p in dados["Produtos"]]
+            produto_sel = st.selectbox("Produto:", nomes_produtos)
+            qtd = st.number_input("Quantidade", min_value=0.0)
+            comp = st.number_input("Comprimento (em mm)", min_value=0.0)
 
         if st.button("Adicionar Produto"):
             valor_unit = next((p["valor_final"] for p in dados["Produtos"] if p["nome"] == produto_sel), 0)
