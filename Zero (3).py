@@ -133,11 +133,11 @@ def main():
                 st.success("Serviço salvo com sucesso!")
 
     elif tipo == "Produto":
-            nome = st.text_input("Nome do Produto")
-            base = st.number_input("Valor Base (R$)", min_value=0.0, format="%.2f")
-            imposto = st.number_input("Imposto (%)", min_value=0.0, format="%.2f")
-            repasse = st.number_input("Repasse (R$)", min_value=0.0, format="%.2f")
-            usinagem = st.number_input("Usinagem (R$)", min_value=0.0, format="%.2f")
+        nome = st.text_input("Nome do Produto")
+        base = st.number_input("Valor Base (R$)", min_value=0.0, format="%.2f")
+        imposto = st.number_input("Imposto (%)", min_value=0.0, format="%.2f")
+        repasse = st.number_input("Repasse (R$)", min_value=0.0, format="%.2f")
+        usinagem = st.number_input("Usinagem (R$)", min_value=0.0, format="%.2f")
 
             if st.button("Salvar Produto") and nome.strip():
                 valor_final = base + (base * imposto / 100) + repasse + usinagem
@@ -158,23 +158,20 @@ def main():
         if not dados["Produtos"]:
             st.info("Nenhum produto cadastrado.")
     else:
-            # Lista de nomes para o selectbox
-            nomes_produtos = [p["nome"] for p in dados["Produtos"]]
-            index_produto = st.selectbox("Selecione um produto para editar", range(len(nomes_produtos)),
-                                         format_func=lambda i: nomes_produtos[i])
+        # Lista de nomes para o selectbox
+        nomes_produtos = [p["nome"] for p in dados["Produtos"]]
+        index_produto = st.selectbox("Selecione um produto para editar", range(len(nomes_produtos)),
+        format_func=lambda i: nomes_produtos[i
+        produto = dados["Produtos"][index_produto]
 
-            produto = dados["Produtos"][index_produto]
-
-            # Campos de edição
-            novo_nome = st.text_input("Nome do Produto", value=produto["nome"])
-            novo_base = st.number_input("Valor Base (R$)", value=produto["valor_base"], min_value=0.0, format="%.2f")
-            novo_imposto = st.number_input("Imposto (%)", value=produto["imposto"], min_value=0.0, format="%.2f")
-            novo_repasse = st.number_input("Repasse (R$)", value=produto["repasse"], min_value=0.0, format="%.2f")
-            novo_usinagem = st.number_input("Usinagem (R$)", value=produto["usinagem"], min_value=0.0, format="%.2f")
-            st.markdown(f"<span style='color:red; font-weight:bold;'>Valor Final Atual: R$ {produto['valor_final']:.2f}</span>", unsafe_allow_html=True)
-            
-
-            col1, col2 = st.columns(2)
+        # Campos de edição
+        novo_nome = st.text_input("Nome do Produto", value=produto["nome"])
+        novo_base = st.number_input("Valor Base (R$)", value=produto["valor_base"], min_value=0.0, format="%.2f")
+        novo_imposto = st.number_input("Imposto (%)", value=produto["imposto"], min_value=0.0, format="%.2f")
+        novo_repasse = st.number_input("Repasse (R$)", value=produto["repasse"], min_value=0.0, format="%.2f")
+        novo_usinagem = st.number_input("Usinagem (R$)", value=produto["usinagem"], min_value=0.0, format="%.2f")
+        st.markdown(f"<span style='color:red; font-weight:bold;'>Valor Final Atual: R$ {produto['valor_final']:.2f}</span>", unsafe_allow_html=True)
+        col1, col2 = st.columns(2)
             with col1:
                 if st.button("Atualizar Produto"):
                     valor_final = novo_base + (novo_base * novo_imposto / 100) + novo_repasse + novo_usinagem
