@@ -191,7 +191,7 @@ def main():
                 salvar_dados(dados)
                 st.success("Produto excluído com sucesso!")
                 st.experimental_rerun()  # Atualiza a interface para refletir a exclusão           
-    elif modo == "Orçamento":
+    elif modo == "Cadastro":
         st.subheader("Orçamento para Cliente")
         nome_cliente = st.text_input("Nome do Cliente")
         contato = st.text_input("Contato")
