@@ -211,7 +211,7 @@ def main():
             st.subheader("Itens do Pedido")
             total_geral = sum(i["total"] for i in st.session_state.itens)
             for i, item in enumerate(st.session_state.itens):
-                sdef main():
+                def main():
     st.title("AQUI-DECK")
     
     dados = carregar_dados()
