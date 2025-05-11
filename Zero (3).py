@@ -194,7 +194,7 @@ def main():
                 st.success("Produto excluído com sucesso!")
                 st.experimental_rerun()
                 
-   elif modo =="Orçamento":
+    elif modo =="Orçamento":
         st.subheader("Orçamento para Cliente")
         nome_cliente = st.text_input("Nome do Cliente")
         contato = st.text_input("Contato")
