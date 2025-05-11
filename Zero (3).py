@@ -193,13 +193,12 @@ def main():
                 st.experimental_rerun()  # Atualiza a interface para refletir a exclusão
                 
     elif modo == "Orçamento":
-    
         st.subheader("Orçamento para Cliente")
         nome_cliente = st.text_input("Nome do Cliente")
         contato = st.text_input("Contato")
         bairro = st.text_input("Bairro")
 
-        if "itens" not in st.session_state:
+            if "itens" not in st.session_state:
             st.session_state.itens = []
 
         nomes_produtos = [p["nome"] for p in dados["Produtos"]]
