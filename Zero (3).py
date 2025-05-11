@@ -158,7 +158,7 @@ def main():
         if sub_modo == "Produtos":
         # (mantenha aqui a lógica atual de gerenciamento de produtos)
             if not dados["Produtos"]:
-            st.info("Nenhum produto cadastrado.")
+                st.info("Nenhum produto cadastrado.")
             else:
                 nomes_produtos = [p["nome"] for p in dados["Produtos"]]
                 index_produto = st.selectbox("Selecione um produto para editar", options=range(len(nomes_produtos)), format_func=lambda i: nomes_produtos[i])
