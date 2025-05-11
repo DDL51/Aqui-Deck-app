@@ -158,11 +158,9 @@ def main():
     else:
         nomes_produtos = [p["nome"] for p in dados["Produtos"]]  # você precisa garantir que isso exista
         index_produto = st.selectbox(
-            "Selecione um produto para editar",
-            options=range(len(nomes_produtos)),
-            format_func=lambda i: nomes_produtos[i]
-        )
-
+        "Selecione um produto para editar",
+        options=range(len(nomes_produtos)),
+        format_func=lambda i: nomes_produtos[i]
         produto = dados["Produtos"][index_produto]
 
         # Campos de edição
@@ -182,10 +180,9 @@ def main():
                     "imposto": novo_imposto,
                     "repasse": novo_repasse,
                     "usinagem": novo_usinagem,
-                    "valor_final": round(valor_final, 2)
-                } 
-                salvar_dados(dados)
-                st.success("Produto atualizado com sucesso!")
+                    "valor_final": round(valor_final, 2)} 
+                 salvar_dados(dados)
+                 st.success("Produto atualizado com sucesso!")
     with col2:
         if st.button("Excluir Produto"):
             dados["Produtos"].pop(index_produto)
