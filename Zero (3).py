@@ -227,8 +227,7 @@ def main():
                         "bairro": bairro,
                         "itens": st.session_state.itens,
                         "total": total_geral,
-                        "data": datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                    }
+                        "data": datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
                     orcamentos.append(novo_orcamento)
                     salvar_orcamentos(orcamentos)
                     st.success("Orçamento salvo e PDF enviado para o Google Drive!")
