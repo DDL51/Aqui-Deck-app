@@ -226,7 +226,7 @@ def main():
                     salvar_orcamentos(orcamentos)
                     st.success("Orçamento salvo e PDF enviado para o Google Drive!")
                     st.session_state.itens = []
-    else:
-        st.warning("Preencha nome do cliente e contato.")
+        else:
+            st.warning("Preencha nome do cliente e contato.")
 if __name__ == "__main__":
     main()
