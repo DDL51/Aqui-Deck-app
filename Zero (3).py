@@ -151,19 +151,20 @@ def main():
             st.success("Produto salvo com sucesso!")
 
     elif modo == "Gerenciar Produtos":
-        st.subheader("Gerenciar Produtos Cadastrados")
+    st.subheader("Gerenciar Produtos Cadastrados")
 
-        if not dados["Produtos"]:
-            st.info("Nenhum produto cadastrado.")
-            
-    # Lista de nomes para o selectbox   
+    if not dados["Produtos"]:
+        st.info("Nenhum produto cadastrado.")
     else:
+        nomes_produtos = [p["nome"] for p in dados["Produtos"]]  # você precisa garantir que isso exista
         index_produto = st.selectbox(
-    "Selecione um produto para editar",
-    options=range(len(nomes_produtos)),
-    format_func=lambda i: nomes_produtos[i]
+            "Selecione um produto para editar",
+            options=range(len(nomes_produtos)),
+            format_func=lambda i: nomes_produtos[i]
         )
-        
+
+        produto = dados["Produtos"][index_produto]
+
         # Campos de edição
         novo_nome = st.text_input("Nome do Produto", value=produto["nome"])
         novo_base = st.number_input("Valor Base (R$)", value=produto["valor_base"], min_value=0.0, format="%.2f")
@@ -171,17 +172,18 @@ def main():
         novo_repasse = st.number_input("Repasse (R$)", value=produto["repasse"], min_value=0.0, format="%.2f")
         novo_usinagem = st.number_input("Usinagem (R$)", value=produto["usinagem"], min_value=0.0, format="%.2f")
         st.markdown(f"<span style='color:red; font-weight:bold;'>Valor Final Atual: R$ {produto['valor_final']:.2f}</span>", unsafe_allow_html=True)
+
         col1, col2 = st.columns(2)
         with col1:
             if st.button("Atualizar Produto"):
                 valor_final = novo_base + (novo_base * novo_imposto / 100) + novo_repasse + novo_usinagem
                 dados["Produtos"][index_produto] = {
-                "nome": novo_nome,
-                "valor_base": novo_base,
-                "imposto": novo_imposto,
-                "repasse": novo_repasse,
-                "usinagem": novo_usinagem,
-                "valor_final": round(valor_final, 2)
+                    "nome": novo_nome,
+                    "valor_base": novo_base,
+                    "imposto": novo_imposto,
+                    "repasse": novo_repasse,
+                    "usinagem": novo_usinagem,
+                    "valor_final": round(valor_final, 2)
                 } 
                 salvar_dados(dados)
                 st.success("Produto atualizado com sucesso!")
@@ -190,9 +192,8 @@ def main():
                 dados["Produtos"].pop(index_produto)
                 salvar_dados(dados)
                 st.success("Produto excluído com sucesso!")
-                st.experimental_rerun()  # Atualiza a interface para refletir a exclusão  
-                
-    elif modo =="Orçamentos":
+                st.experimental_rerun()
+    elif modo =="Orçamento":
         st.subheader("Orçamento para Cliente")
         nome_cliente = st.text_input("Nome do Cliente")
         contato = st.text_input("Contato")
