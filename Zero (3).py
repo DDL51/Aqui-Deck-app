@@ -183,8 +183,8 @@ def main():
                 "usinagem": novo_usinagem,
                 "valor_final": round(valor_final, 2)
                 } 
-                    salvar_dados(dados)
-                    st.success("Produto atualizado com sucesso!")
+                salvar_dados(dados)
+                st.success("Produto atualizado com sucesso!")
         with col2:
             if st.button("Excluir Produto"):
                 dados["Produtos"].pop(index_produto)
