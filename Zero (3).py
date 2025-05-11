@@ -189,8 +189,8 @@ def main():
             if st.button("Excluir Produto"):
                 dados["Produtos"].pop(index_produto)
                 salvar_dados(dados)
-                    st.success("Produto excluído com sucesso!")
-                    st.experimental_rerun()  # Atualiza a interface para refletir a exclusão
+                st.success("Produto excluído com sucesso!")
+                st.experimental_rerun()  # Atualiza a interface para refletir a exclusão
     elif modo == "Orçamento":
         st.subheader("Orçamento para Cliente")
         nome_cliente = st.text_input("Nome do Cliente")
