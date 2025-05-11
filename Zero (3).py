@@ -196,7 +196,7 @@ def main():
 
         if "itens" not in st.session_state:
             st.session_state.itens = []
-            nomes_produtos = [p["nome"] for p in dados["Produtos"]]
+            nomes_produtos = [p["nome"] for p in dados["Produtos"]]]
             produto_sel = st.selectbox("Produto:", nomes_produtos)
             qtd = st.number_input("Quantidade", min_value=0.0)
             comp = st.number_input("Comprimento (em mm)", min_value=0.0)
