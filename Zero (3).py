@@ -146,10 +146,10 @@ def main():
                     "imposto": imposto,
                     "repasse": repasse,
                     "usinagem": usinagem,
-                    "valor_final": round(valor_final, 2)
-                })
-                salvar_dados(dados)
-                st.success("Produto salvo com sucesso!")
+                    "valor_final": round(valor_final, 2)})
+            
+                    salvar_dados(dados)
+                    st.success("Produto salvo com sucesso!")
 
     elif modo == "Gerenciar Produtos":
         st.subheader("Gerenciar Produtos Cadastrados")
