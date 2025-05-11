@@ -196,7 +196,6 @@ def main():
 
         if "itens" not in st.session_state:
             st.session_state.itens = []
-
             nomes_produtos = [p["nome"] for p in dados["Produtos"]]
             produto_sel = st.selectbox("Produto:", nomes_produtos)
             qtd = st.number_input("Quantidade", min_value=0.0)
@@ -205,11 +204,7 @@ def main():
         if st.button("Adicionar Produto"):
             valor_unit = next((p["valor_final"] for p in dados["Produtos"] if p["nome"] == produto_sel), 0)
             total = (qtd * comp / 1000) * valor_unit
-            st.session_state.itens.append({
-"produto": produto_sel,
-"qtd": qtd,"comp": comp,
-"valor_unit": valor_unit,
-"total": total})
+            st.session_state.itens.append({"produto": produto_sel,"qtd": qtd,"comp": comp,"valor_unit": valor_unit,"total": total})
             st.success(f"{produto_sel} adicionado ao pedido!")
 
         if st.session_state.itens:
@@ -226,16 +221,9 @@ def main():
 
                 if sucesso:
                     orcamentos = carregar_orcamentos()
-                    novo_orcamento = {
-"nome_cliente": nome_cliente,
-"contato": contato,
-"bairro": bairro,
-"itens": st.session_state.itens,
-"total": total_geral,
-"data": datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+                    novo_orcamento = {"nome_cliente": nome_cliente,"contato": contato,"bairro": bairro,"itens": st.session_state.itens,"total": total_geral,"data": datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
                     orcamentos.append(novo_orcamento)
                     salvar_orcamentos(orcamentos)
-
                     st.success("Orçamento salvo e PDF enviado para o Google Drive!")
                     st.session_state.itens = []
         else:
