@@ -241,8 +241,8 @@ def main():
             else:
                 st.warning("Preencha nome do cliente e contato.")
                 
-
-    elif sub_modo == "Orçamentos":
+        # Aqui
+        elif sub_modo == "Orçamentos":
         orcamentos = carregar_orcamentos()
         if not orcamentos:
             st.info("Nenhum orçamento salvo.")
@@ -279,6 +279,7 @@ def main():
                 salvar_orcamentos(orcamentos)
                 st.success("Orçamento excluído com sucesso!")
                 st.experimental_rerun()
-        #Fim das alterações      
+        #Fim das alterações
+          
 if __name__ == "__main__":
  main()
