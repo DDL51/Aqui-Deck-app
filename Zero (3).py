@@ -269,16 +269,16 @@ def main():
 
                 if st.button("Atualizar Orçamento"):
                     orc["nome_cliente"] = nome_cliente
-                orc["contato"] = contato
-                orc["bairro"] = bairro
-                salvar_orcamentos(orcamentos)
-                st.success("Orçamento atualizado com sucesso!")
+                    orc["contato"] = contato
+                    orc["bairro"] = bairro
+                    salvar_orcamentos(orcamentos)
+                    st.success("Orçamento atualizado com sucesso!")
 
-            if st.button("Excluir Orçamento"):
-                orcamentos.pop(index)
-                salvar_orcamentos(orcamentos)
-                st.success("Orçamento excluído com sucesso!")
-                st.experimental_rerun()
+                if st.button("Excluir Orçamento"):
+                    orcamentos.pop(index)
+                    salvar_orcamentos(orcamentos)
+                    st.success("Orçamento excluído com sucesso!")
+                    st.experimental_rerun()
         #Fim das alterações
           
 if __name__ == "__main__":
