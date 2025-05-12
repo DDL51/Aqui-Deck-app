@@ -279,6 +279,6 @@ def main():
                 salvar_orcamentos(orcamentos)
                 st.success("Orçamento excluído com sucesso!")
                 st.experimental_rerun()
-#Fim das alterações      
+        #Fim das alterações      
     if __name__ == "__main__":
         main()
