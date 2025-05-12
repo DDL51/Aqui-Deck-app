@@ -1,4 +1,4 @@
-import streamlit as st
+deuimport streamlit as st
 import json
 import os
 from fpdf import FPDF
@@ -280,8 +280,5 @@ def main():
                 st.success("Orçamento excluído com sucesso!")
                 st.experimental_rerun()
 #Fim das alterações      
-
-        
-
-if __name__ == "__main__":
+    if __name__ == "__main__":
         main()
