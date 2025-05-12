@@ -120,7 +120,7 @@ def main():
     
     dados = carregar_dados()
     modo = st.sidebar.radio("Escolha o modo:", ["Cadastro", "Orçamentos", "Gerenciar"])
-
+#PRIMEIRO NÍVEL 
     if modo == "Cadastro":
         st.subheader("Cadastro de Produtos ou Fixos")
         tipo = st.selectbox("Tipo:", ["Fixo", "Produto",])
@@ -150,7 +150,7 @@ def main():
                         "valor_final": round(valor_final, 2)})
                 salvar_dados(dados)
                 st.success("Produto salvo com sucesso!")
-#Inicio das alterações 
+# DEGUNDO NÍVEL 
     
     elif modo == "Orçamentos":
         st.subheader("Orçamento para Cliente")
@@ -200,7 +200,7 @@ def main():
             else:
                 st.warning("Preencha nome do cliente e contato.")
                 
-# fim         
+# TERCEIRO NÍVEL :      
     elif modo == "Gerenciar":
         sub_modo = st.radio("O que deseja gerenciar?", ["Produtos", "Orçamentos"])
 
