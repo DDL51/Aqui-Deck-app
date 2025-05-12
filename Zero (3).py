@@ -247,10 +247,10 @@ def main():
             if not orcamentos:
                 st.info("Nenhum orçamento salvo.")
             
-    orcamentos = carregar_orcamentos()
-    dados["Orcamento"] = orcamentos
-    st.success("Orçamento salvo com sucesso!")
-    st.write("Orçamentos carregados:", orcamentos) 
+            orcamentos = carregar_orcamentos()
+            dados["Orcamento"] = orcamentos
+            st.success("Orçamento salvo com sucesso!")
+            st.write("Orçamentos carregados:", orcamentos) 
             else:
                 indices = [f"{i+1} - {o['nome_cliente']} ({o['data']})" for i, o in enumerate(orcamentos)]
                 index = st.selectbox("Selecione um orçamento:", range(len(orcamentos)), format_func=lambda i: indices[i])
