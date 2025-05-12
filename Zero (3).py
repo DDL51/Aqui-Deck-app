@@ -281,4 +281,4 @@ def main():
                 st.experimental_rerun()
         #Fim das alterações      
 if __name__ == "__main__":
-        main()
+ main()
