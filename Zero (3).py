@@ -241,14 +241,12 @@ def main():
                     salvar_dados(dados)
                     st.success("Produto excluído com sucesso!")
                     st.experimental_rerun()
-            # Aqui
+            
         elif sub_modo == "Orçamentos":
             orcamentos = carregar_orcamentos()
             if not orcamentos:
                 st.info("Nenhum orçamento salvo.")
-                #aqui
             
-            #if sucesso:
     orcamentos = carregar_orcamentos()
     dados["Orcamento"] = orcamentos
     st.success("Orçamento salvo com sucesso!")
