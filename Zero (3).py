@@ -280,5 +280,5 @@ def main():
                 st.success("Orçamento excluído com sucesso!")
                 st.experimental_rerun()
         #Fim das alterações      
-    if __name__ == "__main__":
-            main()
+if __name__ == "__main__":
+    main()
