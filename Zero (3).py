@@ -246,38 +246,21 @@ def main():
             orcamentos = carregar_orcamentos()
             if not orcamentos:
                 st.info("Nenhum orçamento salvo.")
-            
-            orcamentos = carregar_orcamentos()
-            dados["Orcamento"] = orcamentos
-            st.success("Orçamento salvo com sucesso!")
-            st.write("Orçamentos carregados:", orcamentos) 
             else:
+                dados["Orcamento"] = orcamentos
+                st.success("Orçamento salvo com sucesso!")
+                st.write("Orçamentos carregados:", orcamentos)
+
                 indices = [f"{i+1} - {o['nome_cliente']} ({o['data']})" for i, o in enumerate(orcamentos)]
                 index = st.selectbox("Selecione um orçamento:", range(len(orcamentos)), format_func=lambda i: indices[i])
-                orc = orcamentos[index]
+                orcamento = orcamentos[index]
 
                 st.subheader("Editar Orçamento")
                 nome_cliente = st.text_input("Nome do Cliente", value=orc["nome_cliente"])
                 contato = st.text_input("Contato", value=orc["contato"])
                 bairro = st.text_input("Bairro", value=orc["bairro"])
-
-                st.subheader("Itens do Orçamento")
-                for i, item in enumerate(orc["itens"]):
-                    st.markdown(f"**Item {i+1}**")
-                    col1, col2, col3 = st.columns(3)
-                    with col1:
-                        item["produto"] = st.selectbox(f"Produto {i+1}", list(dados["Produtos"].keys()), key=f"produto_{i}", index=list(dados["Produtos"].keys()).index(item["produto"]) if item["produto"] in dados["Produtos"] else 0)
-                    with col2:
-                        item["quantidade"] = st.number_input(f"Qtd {i+1}", min_value=1, value=item["quantidade"], key=f"quantidade_{i}")
-                    with col3:
-                        item["comprimento"] = st.number_input(f"Comp (m) {i+1}", min_value=0.0, value=item["comprimento"], key=f"comprimento_{i}", format="%.2f")
-
-                if st.button("Atualizar Orçamento"):
-                    orc["nome_cliente"] = nome_cliente
-                    orc["contato"] = contato
-                    orc["bairro"] = bairro
-                    salvar_orcamentos(orcamentos)
-                    st.success("Orçamento atualizado com sucesso!")
+                salvar_orcamentos(orcamentos)
+                st.success("Orçamento atualizado com sucesso!")
 
                 if st.button("Excluir Orçamento"):
                     orcamentos.pop(index)
@@ -285,6 +268,8 @@ def main():
                     st.success("Orçamento excluído com sucesso!")
                     st.experimental_rerun()
         #Fim das alterações
+
+
 
     
         
