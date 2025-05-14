@@ -13,8 +13,25 @@ ARQ_PRODUTOS = "produtos.json"
 PASTA_PDFS = "orcamentos"
 PASTA_DRIVE_ID = "0B8YxMAd2J3kFckV4VjVhV1Y1NE0"  # ID da pasta do Google Drive
 SHEET_NAME = "Nome da Planilha"
-JSON_CRED_PATH = "Planilhas.json"
+import json
+import streamlit as st
+from google.oauth2 import service_account
 
+# Carregar credenciais do secret
+credentials_dict = json.loads(st.secrets["GOOGLE_CREDENTIALS"])
+credentials = service_account.Credentials.from_service_account_info(credentials_dict)
+#
+# -------- AUTENTICAÇÃO GOOGLE --------
+def conectar_planilha():
+    try:
+        scope = ["https://www.googleapis.com/auth/spreadsheets"]
+        credentials_dict = json.loads(st.secrets["GOOGLE_CREDENTIALS"])
+        creds = service_account.Credentials.from_service_account_info(credentials_dict, scopes=scope)
+        client = gspread.authorize(creds)
+        return client.open(SHEET_NAME).sheet1
+    except Exception as e:
+        st.error(f"Erro na autenticação com Google Sheets: {e}")
+        return None
 # -------- AUTENTICAÇÃO GOOGLE --------
 def conectar_planilha():
     try:
