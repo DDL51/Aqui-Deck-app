@@ -7,17 +7,15 @@ import gspread
 from google.oauth2.service_account import Credentials
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
+from google.oauth2 import service_account
 
 # -------- CONFIGS --------
 ARQ_PRODUTOS = "produtos.json"
 PASTA_PDFS = "orcamentos"
 PASTA_DRIVE_ID = "0B8YxMAd2J3kFckV4VjVhV1Y1NE0"  # ID da pasta do Google Drive
-SHEET_NAME = "Nome da Planilha"
-import json
-import streamlit as st
-from google.oauth2 import service_account
+SHEET_NAME = "AQUI-DECK"
 
-# Carregar credenciais do secret
+Carregar credenciais do secret
 credentials_dict = json.loads(st.secrets["GOOGLE_CREDENTIALS"])
 credentials = service_account.Credentials.from_service_account_info(credentials_dict)
 #
