@@ -54,9 +54,6 @@ def salvar_dados(dados):
         json.dump(dados, f, indent=4)
 
 # ORÇAMENTO........
-import os
-import json
-
 CAMINHO_ORCAMENTOS = "orcamentos.json"
 
 def carregar_orcamentos():
