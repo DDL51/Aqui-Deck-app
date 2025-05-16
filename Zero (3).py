@@ -17,7 +17,7 @@ SHEET_NAME = "AQUI-DECK"
 #Carregar credenciais do secret
 credentials_dict = json.loads(st.secrets["GOOGLE_CREDENTIALS"])
 credentials = service_account.Credentials.from_service_account_info(credentials_dict)
-#
+
 # -------- AUTENTICAÇÃO GOOGLE --------
 def conectar_planilha():
     try:
