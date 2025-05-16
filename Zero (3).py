@@ -150,8 +150,7 @@ def main():
                         "valor_final": round(valor_final, 2)})
                 salvar_dados(dados)
                 st.success("Produto salvo com sucesso!")
-                if st.sidebar.button("Ver dados salvos"):
-    st.json(dados)
+                if st.sidebar.button("Ver dados salvos"):st.json(dados)
 # DEGUNDO NÍVEL 
     
     elif modo == "Orçamentos":
