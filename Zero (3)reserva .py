@@ -15,7 +15,7 @@ PASTA_PDFS = "orcamentos"
 PASTA_DRIVE_ID = "0B8YxMAd2J3kFckV4VjVhV1Y1NE0"  # ID da pasta do Google Drive
 SHEET_NAME = "AQUI-DECK"
 
-Carregar credenciais do secret
+#Carregar credenciais do secret
 credentials_dict = json.loads(st.secrets["GOOGLE_CREDENTIALS"])
 credentials = service_account.Credentials.from_service_account_info(credentials_dict)
 #
