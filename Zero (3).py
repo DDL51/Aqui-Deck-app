@@ -178,8 +178,8 @@ def main():
             total_geral = sum(i["total"] for i in st.session_state.itens)
             for i, item in enumerate(st.session_state.itens):
                 st.write(f"{i+1}. {item['produto']} - Qtd: {item['qtd']} - Comp: {item['comp']} mm - Total: R$ {item['total']:.2f}")
-            st.write(f"**Total Geral: R$ {total_geral:.2f}**""
-            print("Caminho absoluto do JSON:", os.path.abspath(ARQ_PRODUTOS))
+            st.write(f"**Total Geral: R$ {total_geral:.2f}**")
+            
 
         if st.button("Salvar Orçamento e Enviar"):
             if nome_cliente.strip() and contato.strip():
