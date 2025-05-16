@@ -40,7 +40,7 @@ def carregar_dados():
 def salvar_dados(dados):
     with open(ARQ_PRODUTOS, "w") as f:
         json.dump(dados, f, indent=4)
-        if os.path.exists(ARQ_PRODUTOS):
+    if os.path.exists(ARQ_PRODUTOS):
     st.success("Arquivo salvo com sucesso!")
 else:
     st.error("Arquivo NÃO foi salvo!")
