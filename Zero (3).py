@@ -14,13 +14,6 @@ ARQ_PRODUTOS = "produtos.json"
 PASTA_PDFS = "orcamentos"
 SHEET_NAME = "AQUI-DECK"
 
-#Carregar credenciais do secret
-#credentials_dict = json.loads(st.secrets["GOOGLE_CREDENTIALS"])
-#credentials = service_account.Credentials.from_service_account_info(credentials_dict)
-import streamlit as st
-import json
-from google.oauth2 import service_account
-
 # Carregar credenciais do secrets.toml
 credentials_dict = st.secrets["GOOGLE_CREDENTIALS"]
 credentials = service_account.Credentials.from_service_account_info(credentials_dict)
