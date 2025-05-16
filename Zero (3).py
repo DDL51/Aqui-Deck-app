@@ -54,8 +54,10 @@ def salvar_dados(dados):
         json.dump(dados, f, indent=4)
 
 # ORÇAMENTO........
-CAMINHO_ORCAMENTOS = "orcamentos.json"
 
+CAMINHO_ORCAMENTOS = "orcamentos.json"
+import json
+import os
 def carregar_orcamentos():
     if os.path.exists(CAMINHO_ORCAMENTOS):
         with open(CAMINHO_ORCAMENTOS, "r", encoding="utf-8") as f:
