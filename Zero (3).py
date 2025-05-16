@@ -42,8 +42,8 @@ def salvar_dados(dados):
         json.dump(dados, f, indent=4)
     if os.path.exists(ARQ_PRODUTOS):
         st.success("Arquivo salvo com sucesso!")
-else:
-    st.error("Arquivo NÃO foi salvo!")
+    else:
+        st.error("Arquivo NÃO foi salvo!")
 
 # ORÇAMENTO........
 
