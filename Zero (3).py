@@ -8,9 +8,7 @@ from google.oauth2.service_account import Credentials
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
 from google.oauth2 import service_account
-import os
-st.write("Caminho do arquivo produtos.json:")
-st.write(os.path.abspath("produtos.json"))
+
 # -------- CONFIGS --------
 ARQ_PRODUTOS = "produtos.json"
 PASTA_PDFS = "orcamentos"
