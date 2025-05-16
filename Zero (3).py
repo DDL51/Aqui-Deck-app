@@ -12,7 +12,6 @@ from google.oauth2 import service_account
 # -------- CONFIGS --------
 ARQ_PRODUTOS = "produtos.json"
 PASTA_PDFS = "orcamentos"
-PASTA_DRIVE_ID = "0B8YxMAd2J3kFckV4VjVhV1Y1NE0"  # ID da pasta do Google Drive
 SHEET_NAME = "AQUI-DECK"
 
 #Carregar credenciais do secret
@@ -30,22 +29,12 @@ def conectar_planilha():
     except Exception as e:
         st.error(f"Erro na autenticação com Google Sheets: {e}")
         return None
-# -------- AUTENTICAÇÃO GOOGLE --------
-def conectar_planilha():
-    try:
-        scope = ["https://www.googleapis.com/auth/spreadsheets"]
-        creds = Credentials.from_service_account_file(JSON_CRED_PATH, scopes=scope)
-        client = gspread.authorize(creds)
-        return client.open(SHEET_NAME).sheet1
-    except Exception as e:
-        st.error(f"Erro na autenticação com Google Sheets: {e}")
-        return None
 
 # -------- DADOS LOCAIS --------
 def carregar_dados():
     if not os.path.exists(ARQ_PRODUTOS):
         with open(ARQ_PRODUTOS, "w") as f:
-            json.dump({"Fixos": [], "Produtos": [], "Alteração": []}, f)
+            json.dump({"Fixos": [], "Produtos": []}, f)
     with open(ARQ_PRODUTOS, "r") as f:
         return json.load(f)
 
@@ -56,8 +45,6 @@ def salvar_dados(dados):
 # ORÇAMENTO........
 
 CAMINHO_ORCAMENTOS = "orcamentos.json"
-import json
-import os
 def carregar_orcamentos():
     if os.path.exists(CAMINHO_ORCAMENTOS):
         with open(CAMINHO_ORCAMENTOS, "r", encoding="utf-8") as f:
