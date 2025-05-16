@@ -11,7 +11,7 @@ from google.oauth2 import service_account
 import os
 st.write("Caminho absoluto do arquivo:", os.path.abspath("produtos.json"))
 # -------- CONFIGS --------
-ARQ_PRODUTOS = "produtos.json"
+# ARQ_PRODUTOS = "produtos.json"
 PASTA_PDFS = "orcamentos"
 SHEET_NAME = "AQUI-DECK"
 
@@ -31,20 +31,31 @@ def conectar_planilha():
         return None
 
 # -------- DADOS LOCAIS --------
-def carregar_dados():
-    if not os.path.exists(ARQ_PRODUTOS):
-        with open(ARQ_PRODUTOS, "w") as f:
-            json.dump({"Fixos": [], "Produtos": []}, f)
-    with open(ARQ_PRODUTOS, "r") as f:
-        return json.load(f)
+import streamlit as st
+import pandas as pd
+import gspread
+from google.oauth2 import service_account
 
-def salvar_dados(dados):
-    with open(ARQ_PRODUTOS, "w") as f:
-        json.dump(dados, f, indent=4)
-    if os.path.exists(ARQ_PRODUTOS):
-        st.success("Arquivo salvo com sucesso!")
-    else:
-        st.error("Arquivo NÃO foi salvo!")
+# Autenticação com Google Sheets
+credentials_dict = st.secrets["GOOGLE_CREDENTIALS"]
+credentials = service_account.Credentials.from_service_account_info(credentials_dict)
+gc = gspread.authorize(credentials)
+
+# Abre a planilha e pega as abas
+sh = gc.open_by_url(st.secrets["GOOGLE_CREDENTIALS"]["sheet_url"])
+
+# Garante que as abas existem
+try:
+    aba_produtos = sh.worksheet("Produtos")
+except:
+    aba_produtos = sh.add_worksheet(title="Produtos", rows="1000", cols="10")
+    aba_produtos.append_row(["nome", "valor_base", "imposto", "repasse", "usinagem", "valor_final"])
+
+try:
+    aba_fixos = sh.worksheet("Fixos")
+except:
+    aba_fixos = sh.add_worksheet(title="Fixos", rows="1000", cols="10")
+    aba_fixos.append_row(["nome", "valor"])
 
 # ORÇAMENTO........
 
@@ -123,7 +134,7 @@ def enviar_para_drive(caminho_arquivo):
 def main():
     st.title("AQUI-DECK")
     
-    dados = carregar_dados()
+    #dados = carregar_dados()
     modo = st.sidebar.radio("Escolha o modo:", ["Cadastro", "Orçamentos", "Gerenciar"])
 #PRIMEIRO NÍVEL 
     if modo == "Cadastro":
@@ -144,17 +155,13 @@ def main():
             imposto = st.number_input("Imposto (%)", min_value=0.0, format="%.2f")
             repasse = st.number_input("Repasse (R$)", min_value=0.0, format="%.2f")
             usinagem = st.number_input("Usinagem (R$)", min_value=0.0, format="%.2f")
-            if st.button("Salvar Produto") and nome.strip():
-                valor_final = base + (base * imposto / 100) + repasse + usinagem
-                dados["Produtos"].append({
-                        "nome": nome,
-                        "valor_base": base,
-                        "imposto": imposto,
-                        "repasse": repasse,
-                        "usinagem": usinagem,
-                        "valor_final": round(valor_final, 2)})
-                salvar_dados(dados)
-                st.success("Produto salvo com sucesso!")
+            #
+        if st.button("Salvar Produto") and nome.strip():
+    valor_final = base + (base * imposto / 100) + repasse + usinagem
+    aba_produtos.append_row([
+        nome, base, imposto, repasse, usinagem, round(valor_final, 2)
+    ])
+    st.success("Produto salvo com sucesso!")
                 
 # DEGUNDO NÍVEL 
     
