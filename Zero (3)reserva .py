@@ -1,25 +1,17 @@
 import streamlit as st
-import json
 import os
-from fpdf import FPDF
+import json
 from datetime import datetime
+from fpdf import FPDF
 import gspread
-from google.oauth2.service_account import Credentials
-from pydrive.auth import GoogleAuth
-from pydrive.drive import GoogleDrive
 from google.oauth2 import service_account
 
 # -------- CONFIGS --------
 ARQ_PRODUTOS = "produtos.json"
-PASTA_PDFS = "orcamentos"
-PASTA_DRIVE_ID = "0B8YxMAd2J3kFckV4VjVhV1Y1NE0"  # ID da pasta do Google Drive
+CAMINHO_ORCAMENTOS = "orcamentos.json"
 SHEET_NAME = "AQUI-DECK"
 
-#Carregar credenciais do secret
-credentials_dict = json.loads(st.secrets["GOOGLE_CREDENTIALS"])
-credentials = service_account.Credentials.from_service_account_info(credentials_dict)
-#
-# -------- AUTENTICAÇÃO GOOGLE --------
+# -------- GOOGLE SHEETS --------
 def conectar_planilha():
     try:
         scope = ["https://www.googleapis.com/auth/spreadsheets"]
@@ -28,20 +20,10 @@ def conectar_planilha():
         client = gspread.authorize(creds)
         return client.open(SHEET_NAME).sheet1
     except Exception as e:
-        st.error(f"Erro na autenticação com Google Sheets: {e}")
-        return None
-# -------- AUTENTICAÇÃO GOOGLE --------
-def conectar_planilha():
-    try:
-        scope = ["https://www.googleapis.com/auth/spreadsheets"]
-        creds = Credentials.from_service_account_file(JSON_CRED_PATH, scopes=scope)
-        client = gspread.authorize(creds)
-        return client.open(SHEET_NAME).sheet1
-    except Exception as e:
-        st.error(f"Erro na autenticação com Google Sheets: {e}")
+        st.error(f"Erro ao conectar com Google Sheets: {e}")
         return None
 
-# -------- DADOS LOCAIS --------
+# -------- DADOS DE PRODUTOS --------
 def carregar_dados():
     if not os.path.exists(ARQ_PRODUTOS):
         with open(ARQ_PRODUTOS, "w") as f:
@@ -53,12 +35,7 @@ def salvar_dados(dados):
     with open(ARQ_PRODUTOS, "w") as f:
         json.dump(dados, f, indent=4)
 
-# ORÇAMENTO........
-import os
-import json
-
-CAMINHO_ORCAMENTOS = "orcamentos.json"
-
+# -------- DADOS DE ORÇAMENTOS --------
 def carregar_orcamentos():
     if os.path.exists(CAMINHO_ORCAMENTOS):
         with open(CAMINHO_ORCAMENTOS, "r", encoding="utf-8") as f:
@@ -69,7 +46,6 @@ def carregar_orcamentos():
 def salvar_orcamentos(lista_orcamentos):
     with open(CAMINHO_ORCAMENTOS, "w", encoding="utf-8") as f:
         json.dump(lista_orcamentos, f, indent=4, ensure_ascii=False)
-
 # -------- PDF --------
 def gerar_pdf(nome_cliente, contato, bairro, itens, total_geral):
     os.makedirs(PASTA_PDFS, exist_ok=True)
