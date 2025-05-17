@@ -150,7 +150,7 @@ def main():
                 st.success("Serviço salvo com sucesso!")
 
         elif tipo == "Produto":
-    nome = st.text_input("Nome do Produto")
+            nome = st.text_input("Nome do Produto")
     base = st.number_input("Valor Base (R$)", min_value=0.0, format="%.2f")
     imposto = st.number_input("Imposto (%)", min_value=0.0, format="%.2f")
     repasse = st.number_input("Repasse (R$)", min_value=0.0, format="%.2f")
