@@ -43,6 +43,11 @@ gc = gspread.authorize(credentials)
 
 # Abre a planilha e pega as abas
 sh = gc.open_by_url(st.secrets["GOOGLE_CREDENTIALS"]["sheet_url"])
+# Abre a planilha e pega as abas
+sh = gc.open_by_url(st.secrets["GOOGLE_CREDENTIALS"]["sheet_url"])
+
+# Mostra o título da planilha aberta
+st.write("Planilha acessada:", sh.title)
 
 # Garante que as abas existem
 try:
