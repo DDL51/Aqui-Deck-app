@@ -24,24 +24,24 @@ def conectar_planilha():
         return None
 
 # -------- DADOS DE PRODUTOS --------
-def carregar_dados():
-    if not os.path.exists(ARQ_PRODUTOS):
-        with open(ARQ_PRODUTOS, "w") as f:
-            json.dump({"Fixos": [], "Produtos": [], "Alteração": []}, f)
-    with open(ARQ_PRODUTOS, "r") as f:
-        return json.load(f)
+#def carregar_dados():
+    #if not os.path.exists(ARQ_PRODUTOS):
+        #with open(ARQ_PRODUTOS, "w") as f:
+            #json.dump({"Fixos": [], "Produtos": [], "Alteração": []}, f)
+    #with open(ARQ_PRODUTOS, "r") as f:
+        #return json.load(f)
 
-def salvar_dados(dados):
-    with open(ARQ_PRODUTOS, "w") as f:
-        json.dump(dados, f, indent=4)
+#def salvar_dados(dados):
+    $with open(ARQ_PRODUTOS, "w") as f:
+        #json.dump(dados, f, indent=4)
 
 # -------- DADOS DE ORÇAMENTOS --------
-def carregar_orcamentos():
-    if os.path.exists(CAMINHO_ORCAMENTOS):
-        with open(CAMINHO_ORCAMENTOS, "r", encoding="utf-8") as f:
-            return json.load(f)
-    else:
-        return []
+#def carregar_orcamentos():
+    #if os.path.exists(CAMINHO_ORCAMENTOS):
+        $with open(CAMINHO_ORCAMENTOS, "r", encoding="utf-8") as f:
+            #return json.load(f)
+    #else:
+        $return []
 
 def salvar_orcamentos(lista_orcamentos):
     with open(CAMINHO_ORCAMENTOS, "w", encoding="utf-8") as f:
@@ -109,7 +109,7 @@ def enviar_para_drive(caminho_arquivo):
 def main():
     st.title("AQUI-DECK")
     
-    dados = carregar_dados()
+    #dados = carregar_dados()
     modo = st.sidebar.radio("Escolha o modo:", ["Cadastro", "Orçamentos", "Gerenciar"])
 #PRIMEIRO NÍVEL 
     if modo == "Cadastro":
