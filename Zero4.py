@@ -38,10 +38,10 @@ def conectar_planilha():
 # -------- DADOS DE ORÇAMENTOS --------
 #def carregar_orcamentos():
     #if os.path.exists(CAMINHO_ORCAMENTOS):
-        $with open(CAMINHO_ORCAMENTOS, "r", encoding="utf-8") as f:
+        #with open(CAMINHO_ORCAMENTOS, "r", encoding="utf-8") as f:
             #return json.load(f)
     #else:
-        $return []
+        #return []
 
 def salvar_orcamentos(lista_orcamentos):
     with open(CAMINHO_ORCAMENTOS, "w", encoding="utf-8") as f:
