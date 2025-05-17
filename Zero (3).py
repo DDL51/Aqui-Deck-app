@@ -156,10 +156,10 @@ def main():
             repasse = st.number_input("Repasse (R$)", min_value=0.0, format="%.2f")
             usinagem = st.number_input("Usinagem (R$)", min_value=0.0, format="%.2f")
             #
-    if st.button("Salvar Produto") and nome.strip():
-        valor_final = base + (base * imposto / 100) + repasse + usinagem
-        aba_produtos.append_row([
-        nome, base, imposto, repasse, usinagem, round(valor_final, 2)
+            if st.button("Salvar Produto") and nome.strip():
+                valor_final = base + (base * imposto / 100) + repasse + usinagem
+                aba_produtos.append_row([
+                nome, base, imposto, repasse, usinagem, round(valor_final, 2)
     ])
     st.success("Produto salvo com sucesso!")
                 
