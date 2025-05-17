@@ -32,7 +32,7 @@ def conectar_planilha():
         #return json.load(f)
 
 #def salvar_dados(dados):
-    $with open(ARQ_PRODUTOS, "w") as f:
+    #with open(ARQ_PRODUTOS, "w") as f:
         #json.dump(dados, f, indent=4)
 
 # -------- DADOS DE ORÇAMENTOS --------
