@@ -19,16 +19,16 @@ SHEET_NAME = "AQUI-DECK"
 credentials_dict = st.secrets["GOOGLE_CREDENTIALS"]
 credentials = service_account.Credentials.from_service_account_info(credentials_dict)
 # -------- AUTENTICAÇÃO GOOGLE --------
-def conectar_planilha():
-    try:
-        scope = ["https://www.googleapis.com/auth/spreadsheets"]
-        credentials_dict = json.loads(st.secrets["GOOGLE_CREDENTIALS"])
-        creds = service_account.Credentials.from_service_account_info(credentials_dict, scopes=scope)
-        client = gspread.authorize(creds)
-        return client.open(SHEET_NAME).sheet1
-    except Exception as e:
-        st.error(f"Erro na autenticação com Google Sheets: {e}")
-        return None
+#def conectar_planilha():
+   # try:
+       # scope = ["https://www.googleapis.com/auth/spreadsheets"]
+       # credentials_dict = json.loads(st.secrets["GOOGLE_CREDENTIALS"])
+        #creds = service_account.Credentials.from_service_account_info(credentials_dict, scopes=scope)
+        #client = gspread.authorize(creds)
+        #return client.open(SHEET_NAME).sheet1
+    #except Exception as e:
+       # st.error(f"Erro na autenticação com Google Sheets: {e}")
+       # return None
 
 # -------- DADOS LOCAIS --------
 import streamlit as st
@@ -133,8 +133,6 @@ def enviar_para_drive(caminho_arquivo):
 # APP PRINCIPAL --------
 def main():
     st.title("AQUI-DECK")
-    
-    #dados = carregar_dados()
     modo = st.sidebar.radio("Escolha o modo:", ["Cadastro", "Orçamentos", "Gerenciar"])
 #PRIMEIRO NÍVEL 
     if modo == "Cadastro":
