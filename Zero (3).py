@@ -11,14 +11,13 @@ from google.oauth2 import service_account
 import os
 
 # -------- AUTENTICAÇÃO GOOGLE --------
-
-def conectar_planilha():
+def conectar_planilha(nome_aba="Fixos"):
     try:
         # Escopos necessários
         scope = ["https://www.googleapis.com/auth/spreadsheets", 
                  "https://www.googleapis.com/auth/drive"]
 
-        # Carrega as credenciais do secrets.toml (convertidas corretamente em formato dict)
+        # Carrega as credenciais
         credentials_dict = st.secrets["gcp_service_account"]
 
         # Autentica com Google
@@ -26,11 +25,11 @@ def conectar_planilha():
             credentials_dict, scopes=scope)
         client = gspread.authorize(creds)
 
-        # ID da planilha extraído da URL
+        # ID da planilha
         spreadsheet_id = "1Dx4X3a0GagiB0eyv_wqOPkmkSfUtW9i6B-sQATf75H0"
 
-        # Abre a primeira aba da planilha
-        worksheet = client.open_by_key(spreadsheet_id).sheet1
+        # Abre a aba específica
+        worksheet = client.open_by_key(spreadsheet_id).worksheet(nome_aba)
 
         return worksheet
 
@@ -50,9 +49,13 @@ def main():
         nome = st.text_input("Nome do Serviço Fixo")
         valor = st.number_input("Valor Total (R$)", min_value=0.0, format="%.2f")
         if st.button("Salvar Serviço Fixo") and nome.strip():
-            dados["Fixos"].append({"nome": nome, "valor": valor})
-            salvar_dados(dados)
+    worksheet = conectar_planilha("Fixos")
+    if worksheet:
+        try:
+            worksheet.append_row([nome, valor])
             st.success("Serviço salvo com sucesso!")
+        except Exception as e:
+            st.error(f"Erro ao salvar na planilha: {e}")
 
     elif tipo == "Produto":
         nome = st.text_input("Nome do Produto")
