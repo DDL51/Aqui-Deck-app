@@ -158,8 +158,8 @@ def main():
     modo = st.sidebar.radio("Escolha o modo:", ["Cadastro", "Orçamentos", "Gerenciar"])
 #PRIMEIRO NÍVEL 
     if modo == "Cadastro":
-    st.subheader("Cadastro de Produtos ou Fixos")
-    tipo = st.selectbox("Tipo:", ["Fixo", "Produto"])
+        st.subheader("Cadastro de Produtos ou Fixos")
+        tipo = st.selectbox("Tipo:", ["Fixo", "Produto"])
 
     if tipo == "Fixo":
         nome = st.text_input("Nome do Serviço Fixo")
