@@ -158,34 +158,34 @@ def main():
     modo = st.sidebar.radio("Escolha o modo:", ["Cadastro", "Orçamentos", "Gerenciar"])
 #PRIMEIRO NÍVEL 
     if modo == "Cadastro":
-        st.subheader("Cadastro de Produtos ou Fixos")
-        tipo = st.selectbox("Tipo:", ["Fixo", "Produto",])
+    st.subheader("Cadastro de Produtos ou Fixos")
+    tipo = st.selectbox("Tipo:", ["Fixo", "Produto"])
 
-        if tipo == "Fixo":
-            nome = st.text_input("Nome do Serviço Fixo")
-            valor = st.number_input("Valor Total (R$)", min_value=0.0, format="%.2f")
-            if st.button("Salvar Serviço Fixo") and nome.strip():
-                dados["Fixos"].append({"nome": nome, "valor": valor})
-                salvar_dados(dados)
-                st.success("Serviço salvo com sucesso!")
+    if tipo == "Fixo":
+        nome = st.text_input("Nome do Serviço Fixo")
+        valor = st.number_input("Valor Total (R$)", min_value=0.0, format="%.2f")
+        if st.button("Salvar Serviço Fixo") and nome.strip():
+            dados["Fixos"].append({"nome": nome, "valor": valor})
+            salvar_dados(dados)
+            st.success("Serviço salvo com sucesso!")
 
-        elif tipo == "Produto":
-            nome = st.text_input("Nome do Produto")
-            base = st.number_input("Valor Base (R$)", min_value=0.0, format="%.2f")
-            imposto = st.number_input("Imposto (%)", min_value=0.0, format="%.2f")
-            repasse = st.number_input("Repasse (R$)", min_value=0.0, format="%.2f")
-            usinagem = st.number_input("Usinagem (R$)", min_value=0.0, format="%.2f")
+    elif tipo == "Produto":
+        nome = st.text_input("Nome do Produto")
+        base = st.number_input("Valor Base (R$)", min_value=0.0, format="%.2f")
+        imposto = st.number_input("Imposto (%)", min_value=0.0, format="%.2f")
+        repasse = st.number_input("Repasse (R$)", min_value=0.0, format="%.2f")
+        usinagem = st.number_input("Usinagem (R$)", min_value=0.0, format="%.2f")
 
-    if st.button("Salvar Produto"):
-    if nome.strip():  # Verifica se o nome não está vazio
-        valor_final = base + (base * imposto / 100) + repasse + usinagem
-        aba_produtos.append_row([
-            nome, base, imposto, repasse, usinagem, round(valor_final, 2)
-        ])
-        st.write("URL da planilha conectada:", st.secrets["GOOGLE_CREDENTIALS"]["sheet_url"])
-        st.success("Produto salvo com sucesso!")
-    else:
-        st.warning("O nome do produto não pode estar vazio.")
+        if st.button("Salvar Produto"):
+            if nome.strip():  # Verifica se o nome não está vazio
+                valor_final = base + (base * imposto / 100) + repasse + usinagem
+                aba_produtos.append_row([
+                    nome, base, imposto, repasse, usinagem, round(valor_final, 2)
+                ])
+                st.write("URL da planilha conectada:", st.secrets["GOOGLE_CREDENTIALS"]["sheet_url"])
+                st.success("Produto salvo com sucesso!")
+            else:
+                st.warning("O nome do produto não pode estar vazio.")
 # DEGUNDO NÍVEL 
     
     elif modo == "Orçamentos":
