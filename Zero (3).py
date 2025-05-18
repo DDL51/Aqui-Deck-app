@@ -58,9 +58,9 @@ import gspread
 from google.oauth2 import service_account
 
 # Autenticação com Google Sheets
-#credentials_dict = st.secrets["GOOGLE_CREDENTIALS"]
-#credentials = service_account.Credentials.from_service_account_info(credentials_dict)
-#gc = gspread.authorize(credentials)
+credentials_dict = st.secrets["GOOGLE_CREDENTIALS"]
+credentials = service_account.Credentials.from_service_account_info(credentials_dict)
+gc = gspread.authorize(credentials)
 
 # Abre a planilha e pega as abas
 sh = gc.open_by_url(st.secrets["GOOGLE_CREDENTIALS"]["sheet_url"])
