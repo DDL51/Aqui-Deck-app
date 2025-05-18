@@ -56,25 +56,35 @@ def main():
             st.success("Serviço salvo com sucesso!")
         except Exception as e:
             st.error(f"Erro ao salvar na planilha: {e}")
+            #
 
     elif tipo == "Produto":
-        nome = st.text_input("Nome do Produto")
-        base = st.number_input("Valor Base (R$)", min_value=0.0, format="%.2f")
-        imposto = st.number_input("Imposto (%)", min_value=0.0, format="%.2f")
-        repasse = st.number_input("Repasse (R$)", min_value=0.0, format="%.2f")
-        usinagem = st.number_input("Usinagem (R$)", min_value=0.0, format="%.2f")
+    nome = st.text_input("Nome do Produto")
+    base = st.number_input("Valor Base (R$)", min_value=0.0, format="%.2f")
+    imposto = st.number_input("Imposto (%)", min_value=0.0, format="%.2f")
+    repasse = st.number_input("Repasse (R$)", min_value=0.0, format="%.2f")
+    usinagem = st.number_input("Usinagem (R$)", min_value=0.0, format="%.2f")
 
-        if st.button("Salvar Produto"):
-            if nome.strip():  # Verifica se o nome não está vazio
-                valor_final = base + (base * imposto / 100) + repasse + usinagem
-                aba_produtos.append_row([
-                    nome, base, imposto, repasse, usinagem, round(valor_final, 2)
-                ])
-                st.write("URL da planilha conectada:", st.secrets["GOOGLE_CREDENTIALS"]["sheet_url"])
-                st.success("Produto salvo com sucesso!")
+    if st.button("Salvar Produto"):
+        if nome.strip():  # Verifica se o nome não está vazio
+            valor_final = base + (base * imposto / 100) + repasse + usinagem
+
+            # Conecta à aba "Produtos"
+            aba_produtos = conectar_planilha("Produtos")
+            if aba_produtos:
+                try:
+                    aba_produtos.append_row([
+                        nome, base, imposto, repasse, usinagem, round(valor_final, 2)
+                    ])
+                    st.write("URL da planilha conectada:", st.secrets["GOOGLE_CREDENTIALS"]["sheet_url"])
+                    st.success("Produto salvo com sucesso!")
+                except Exception as e:
+                    st.error(f"Erro ao salvar produto: {e}")
             else:
-                st.warning("O nome do produto não pode estar vazio.")
-# DEGUNDO NÍVEL 
+                st.error("Erro ao conectar à aba Produtos.")
+        else:
+            st.warning("O nome do produto não pode estar vazio.")
+# sEGUNDO NÍVEL 
     
     elif modo == "Orçamentos":
         st.subheader("Orçamento para Cliente")
