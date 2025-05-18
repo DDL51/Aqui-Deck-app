@@ -49,7 +49,7 @@ def main():
         nome = st.text_input("Nome do Serviço Fixo")
         valor = st.number_input("Valor Total (R$)", min_value=0.0, format="%.2f")
         if st.button("Salvar Serviço Fixo") and nome.strip():
-    worksheet = conectar_planilha("Fixos")
+            worksheet = conectar_planilha("Fixos")
     if worksheet:
         try:
             worksheet.append_row([nome, valor])
