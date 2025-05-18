@@ -19,13 +19,29 @@ SHEET_NAME = "AQUI-DECK"
 credentials_dict = st.secrets["GOOGLE_CREDENTIALS"]
 credentials = service_account.Credentials.from_service_account_info(credentials_dict)
 # -------- AUTENTICAÇÃO GOOGLE --------
+
 def conectar_planilha():
-   try:
-      scope = ["https://www.googleapis.com/auth/spreadsheets"]
-      credentials_dict = json.loads(st.secrets["GOOGLE_CREDENTIALS"])
-      creds = service_account.Credentials.from_service_account_info(credentials_dict, scopes=scope)
-      client = gspread.authorize(creds)
-        return client.open(SHEET_NAME).sheet1
+    try:
+        # Escopos necessários
+        scope = ["https://www.googleapis.com/auth/spreadsheets", 
+                 "https://www.googleapis.com/auth/drive"]
+
+        # Carrega as credenciais do secrets.toml (convertidas corretamente em formato dict)
+        credentials_dict = st.secrets["gcp_service_account"]
+
+        # Autentica com Google
+        creds = service_account.Credentials.from_service_account_info(
+            credentials_dict, scopes=scope)
+        client = gspread.authorize(creds)
+
+        # ID da planilha extraído da URL
+        spreadsheet_id = "1Dx4X3a0GagiB0eyv_wqOPkmkSfUtW9i6B-sQATf75H0"
+
+        # Abre a primeira aba da planilha
+        worksheet = client.open_by_key(spreadsheet_id).sheet1
+
+        return worksheet
+
     except Exception as e:
         st.error(f"Erro na autenticação com Google Sheets: {e}")
         return None
