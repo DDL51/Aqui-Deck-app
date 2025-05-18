@@ -138,6 +138,7 @@ def enviar_para_drive(caminho_arquivo):
 # APP PRINCIPAL --------
 def main():
     st.title("AQUI-DECK")
+    st.write("URL da planilha conectada:", st.secrets["GOOGLE_CREDENTIALS"]["sheet_url"])
     modo = st.sidebar.radio("Escolha o modo:", ["Cadastro", "Orçamentos", "Gerenciar"])
 #PRIMEIRO NÍVEL 
     if modo == "Cadastro":
