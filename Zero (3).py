@@ -138,7 +138,7 @@ def enviar_para_drive(caminho_arquivo):
 # APP PRINCIPAL --------
 def main():
     st.title("AQUI-DECK")
-    st.write("URL da planilha conectada:", st.secrets["GOOGLE_CREDENTIALS"]["sheet_url"])
+    
     modo = st.sidebar.radio("Escolha o modo:", ["Cadastro", "Orçamentos", "Gerenciar"])
 #PRIMEIRO NÍVEL 
     if modo == "Cadastro":
@@ -166,6 +166,7 @@ def main():
         aba_produtos.append_row([
             nome, base, imposto, repasse, usinagem, round(valor_final, 2)
         ])
+        st.write("URL da planilha conectada:", st.secrets["GOOGLE_CREDENTIALS"]["sheet_url"])
         st.success("Produto salvo com sucesso!")
     else:
         st.warning("O nome do produto não pode estar vazio.")
