@@ -52,10 +52,8 @@ def conectar_planilha():
         return None
 
 # -------- DADOS LOCAIS --------
-import streamlit as st
+
 import pandas as pd
-import gspread
-from google.oauth2 import service_account
 
 # Autenticação com Google Sheets
 credentials_dict = st.secrets["GOOGLE_CREDENTIALS"]
@@ -64,9 +62,6 @@ gc = gspread.authorize(credentials)
 
 # Abre a planilha e pega as abas
 sh = gc.open_by_url(st.secrets["GOOGLE_CREDENTIALS"]["sheet_url"])
-# Abre a planilha e pega as abas
-sh = gc.open_by_url(st.secrets["GOOGLE_CREDENTIALS"]["sheet_url"])
-
 # Mostra o título da planilha aberta
 st.write("Planilha acessada:", sh.title)
 
