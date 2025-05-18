@@ -15,7 +15,7 @@ st.write("Caminho absoluto do arquivo:", os.path.abspath("produtos.json"))
 PASTA_PDFS = "orcamentos"
 SHEET_NAME = "AQUI-DECK"
 
-Carregar credenciais do secrets.toml
+#Carregar credenciais do secrets.toml
 credentials_dict = st.secrets["GOOGLE_CREDENTIALS"]
 credentials = service_account.Credentials.from_service_account_info(credentials_dict)
 # -------- AUTENTICAÇÃO GOOGLE --------
