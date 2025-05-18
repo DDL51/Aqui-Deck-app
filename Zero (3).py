@@ -17,11 +17,12 @@ SHEET_NAME = "AQUI-DECK"
 
 #Carregar credenciais do secrets.toml
 #credentials_dict = st.secrets["GOOGLE_CREDENTIALS"]
-credentials = Credentials.from_service_account_info(
-    st.secrets["gcp_service_account"],
-    scopes=scope
-)
-credentials = service_account.Credentials.from_service_account_info(credentials_dict)
+
+#credentials = Credentials.from_service_account_info(
+    ###st.secrets["gcp_service_account"],
+    ###scopes=scope
+###)
+###credentials = service_account.Credentials.from_service_account_info(credentials_dict)
 # -------- AUTENTICAÇÃO GOOGLE --------
 
 def conectar_planilha():
