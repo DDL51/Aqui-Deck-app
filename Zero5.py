@@ -90,11 +90,7 @@ def main():
         st.subheader("Gerenciamento de Dados")
         st.info("""
         O gerenciamento de **Produtos**, **Fixos**, **Orçamentos** e **Agenda** pode ser feito diretamente na planilha do Google.
-        -Acesse a planilha para:
-      -  Editar valores ou nomes de produtos/serviços
-     #-Corrigir ou remover registros
-     - Atualizar orçamentos existentes
-    #""")
+
     
     if st.button("Abrir Planilha"):
         js = f"window.open('{st.secrets['GOOGLE_CREDENTIALS']['sheet_url']}', '_blank')"
