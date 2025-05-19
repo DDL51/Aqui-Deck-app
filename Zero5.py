@@ -86,13 +86,17 @@ def main():
                 else:
                     st.warning("O nome do produto não pode estar vazio.")
         # GERENCIAR .....
-    elif modo == "Gerenciar":
-        st.subheader("Gerenciamento de Dados")
-    
-    if st.button("Abrir Planilha"):
-        js = f"window.open('{st.secrets["gcp_service_account"]['sheet_url']}', '_blank')"
-        st.markdown(f"<script>{js}</script>", unsafe_allow_html=True)
+        # GERENCIAR .....
+        elif modo == "Gerenciar":
+            st.subheader("Gerenciamento de Dados")
 
+        # ID da planilha
+        spreadsheet_id = "1Dx4X3a0GagiB0eyv_wqOPkmkSfUtW9i6B-sQATf75H0"
+        sheet_url = f"https://docs.google.com/spreadsheets/d/{spreadsheet_id}"
+
+    if st.button("Abrir Planilha"):
+        js = f"window.open('{sheet_url}', '_blank')"
+        st.markdown(f"<script>{js}</script>", unsafe_allow_html=True)
     # LISTA PRODUTOS......
     def carregar_produtos():
         aba_produtos = conectar_planilha("Produtos")
