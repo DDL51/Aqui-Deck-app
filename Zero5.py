@@ -90,7 +90,7 @@ def main():
         st.subheader("Gerenciamento de Dados")
     
     if st.button("Abrir Planilha"):
-        js = f"window.open('{st.secrets['GOOGLE_CREDENTIALS']['sheet_url']}', '_blank')"
+        js = f"window.open('{st.secrets["gcp_service_account"]['sheet_url']}', '_blank')"
         st.markdown(f"<script>{js}</script>", unsafe_allow_html=True)
 
     # LISTA PRODUTOS......
