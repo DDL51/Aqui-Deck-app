@@ -84,7 +84,8 @@ def main():
                 st.error("Erro ao conectar à aba Produtos.")
         else:
             st.warning("O nome do produto não pode estar vazio.")
-# sEGUNDO NÍVEL 
+            
+# ORÇAMENTO.....
     
     elif modo == "Orçamentos":
         st.subheader("Orçamento para Cliente")
@@ -112,28 +113,22 @@ def main():
             for i, item in enumerate(st.session_state.itens):
                 st.write(f"{i+1}. {item['produto']} - Qtd: {item['qtd']} - Comp: {item['comp']} mm - Total: R$ {item['total']:.2f}")
             st.write(f"**Total Geral: R$ {total_geral:.2f}**")
-            
-
-        if st.button("Salvar Orçamento e Enviar"):
-            if nome_cliente.strip() and contato.strip():
-                arquivo = gerar_pdf(nome_cliente, contato, bairro, st.session_state.itens, total_geral)
-                sucesso = enviar_para_drive(arquivo)
-
-                if sucesso:
-                    orcamentos = carregar_orcamentos()
-                    novo_orcamento = {
-                        "nome_cliente": nome_cliente,
-                        "contato": contato,
-                        "bairro": bairro,
-                        "itens": st.session_state.itens,
-                        "total": total_geral,
-                        "data": datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
-                    orcamentos.append(novo_orcamento)
-                    salvar_orcamentos(orcamentos)
-                    st.success("Orçamento salvo e PDF enviado para o Google Drive!")
-                    st.session_state.itens = []
-            else:
-                st.warning("Preencha nome do cliente e contato.")
+            # ORÇAMENTO......
+def carregar_produtos():
+    aba_produtos = conectar_planilha("Produtos")
+    if not aba_produtos:
+        return []
+    linhas = aba_produtos.get_all_values()[1:]  # Ignora cabeçalho
+    produtos = []
+    for linha in linhas:
+        try:
+            produtos.append({
+                "nome": linha[0],
+                "valor_final": float(linha[5])  # A coluna 6 (índice 5) é o valor final
+            })
+        except:
+            continue
+    return produtos
                 
 # TERCEIRO NÍVEL :      
     elif modo == "Gerenciar":
