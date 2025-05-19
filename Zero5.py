@@ -66,6 +66,7 @@ def main():
             usinagem = st.number_input("Usinagem (R$)", min_value=0.0, format="%.2f")
 
             if st.button("Salvar Produto"):
+                worksheet = conectar_planilha("Produtos")
                 if nome.strip():  # Verifica se o nome não está vazio
                     valor_final = base + (base * imposto / 100) + repasse + usinagem
 
