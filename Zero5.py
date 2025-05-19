@@ -87,17 +87,22 @@ def main():
                     st.warning("O nome do produto não pode estar vazio.")
         # GERENCIAR .....
         # GERENCIAR .....
+    
     elif modo == "Gerenciar":
-        st.subheader("Gerenciamento de Dados")
+    st.subheader("Gerenciamento de Dados")
+    st.markdown(
+        "Você pode **editar os Produtos, Fixos e Orçamentos diretamente na planilha**. "
+        "Após concluir as alterações, volte para o app clicando no atalho ou ícone."
+    )
 
-        # ID da sua planilha
-        spreadsheet_id = "1Dx4X3a0GagiB0eyv_wqOPkmkSfUtW9i6B-sQATf75H0"
+    # ID da sua planilha
+    spreadsheet_id = "1Dx4X3a0GagiB0eyv_wqOPkmkSfUtW9i6B-sQATf75H0"
 
-        # Monta a URL da planilha
-        sheet_url = f"https://docs.google.com/spreadsheets/d/{spreadsheet_id}/edit"
-# Botão para abrir a planilha
-st.subheader("Gerenciamento de Dados")
-st.link_button("Abrir Planilha", sheet_url)
+    # Monta a URL da planilha
+    sheet_url = f"https://docs.google.com/spreadsheets/d/{spreadsheet_id}/edit"
+
+    # Botão para abrir a planilha
+    st.link_button("Abrir Planilha", sheet_url)    
 
     # LISTA PRODUTOS......
     def carregar_produtos():
