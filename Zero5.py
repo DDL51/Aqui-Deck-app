@@ -89,8 +89,8 @@ def main():
         # GERENCIAR .....
     
     elif modo == "Gerenciar":
-    st.subheader("Gerenciamento de Dados")
-    st.markdown(
+        st.subheader("Gerenciamento de Dados")
+        st.markdown(
         "Você pode **editar os Produtos, Fixos e Orçamentos diretamente na planilha**. "
         "Após concluir as alterações, volte para o app clicando no atalho ou ícone."
     )
