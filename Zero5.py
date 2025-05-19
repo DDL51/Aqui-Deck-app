@@ -88,8 +88,8 @@ def main():
         # GERENCIAR .....
     elif modo == "Gerenciar":
         st.subheader("Gerenciamento de Dados")
-            #st.info("""
-            #O gerenciamento de **Produtos**, **Fixos**, **Orçamentos** e **Agenda** pode ser feito diretamente na planilha do Google.
+        st.info("""
+        O gerenciamento de **Produtos**, **Fixos**, **Orçamentos** e **Agenda** pode ser feito diretamente na planilha do Google.
 
    # Acesse a planilha para:
    # - Editar valores ou nomes de produtos/serviços
