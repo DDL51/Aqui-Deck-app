@@ -76,7 +76,7 @@ def main():
                             aba_produtos.append_row([
                                 nome, base, imposto, repasse, usinagem, round(valor_final, 2)
                             ])
-                            st.write("URL da planilha conectada:", st.secrets["GOOGLE_CREDENTIALS"]["sheet_url"])
+                           # st.write("URL da planilha conectada:", st.secrets["GOOGLE_CREDENTIALS"]["sheet_url"])
                             st.success("Produto salvo com sucesso!")
                         except Exception as e:
                             st.error(f"Erro ao salvar produto: {e}")
