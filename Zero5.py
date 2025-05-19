@@ -90,13 +90,16 @@ def main():
     elif modo == "Gerenciar":
         st.subheader("Gerenciamento de Dados")
 
-        # ID da planilha
-        spreadsheet_id = "1Dx4X3a0GagiB0eyv_wqOPkmkSfUtW9i6B-sQATf75H0"
-        sheet_url = f"https://docs.google.com/spreadsheets/d/{spreadsheet_id}"
+# ID da sua planilha
+spreadsheet_id = "1Dx4X3a0GagiB0eyv_wqOPkmkSfUtW9i6B-sQATf75H0"
 
-    if st.button("Abrir Planilha"):
-        js = f"window.open('{sheet_url}', '_blank')"
-        st.markdown(f"<script>{js}</script>", unsafe_allow_html=True)
+# Monta a URL da planilha
+sheet_url = f"https://docs.google.com/spreadsheets/d/{spreadsheet_id}/edit"
+
+# Botão para abrir a planilha
+st.subheader("Gerenciamento de Dados")
+st.link_button("Abrir Planilha", sheet_url)
+
     # LISTA PRODUTOS......
     def carregar_produtos():
         aba_produtos = conectar_planilha("Produtos")
