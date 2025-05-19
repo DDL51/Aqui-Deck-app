@@ -50,13 +50,14 @@ def main():
         valor = st.number_input("Valor Total (R$)", min_value=0.0, format="%.2f")
         if st.button("Salvar Serviço Fixo") and nome.strip():
             worksheet = conectar_planilha("Fixos")
-    if worksheet:
-        try:
+        if worksheet:
+            try:
             worksheet.append_row([nome, valor])
             st.success("Serviço salvo com sucesso!")
         except Exception as e:
             st.error(f"Erro ao salvar na planilha: {e}")
-            #
+            
+    # produtos 
 
     elif tipo == "Produto":
     nome = st.text_input("Nome do Produto")
@@ -159,77 +160,7 @@ def carregar_produtos():
                     st.error(f"Erro ao salvar orçamento: {e}")
             else:
                 st.error("Erro ao conectar à aba Orçamentos.")    
-                
-
-    
-    
-    # TERCEIRO NÍVEL :      
-    elif modo == "Gerenciar":
-        sub_modo = st.radio("O que deseja gerenciar?", ["Produtos", "Orçamentos"])
-
-        if sub_modo == "Produtos":
-        # (mantenha aqui a lógica atual de gerenciamento de produtos)
-            if not dados["Produtos"]:
-                st.info("Nenhum produto cadastrado.")
-            else:
-                nomes_produtos = [p["nome"] for p in dados["Produtos"]]
-                index_produto = st.selectbox("Selecione um produto para editar", options=range(len(nomes_produtos)), format_func=lambda i: nomes_produtos[i])
-                produto = dados["Produtos"][index_produto]
-
-                novo_nome = st.text_input("Nome do Produto", value=produto["nome"])
-                novo_base = st.number_input("Valor Base (R$)", value=produto["valor_base"], min_value=0.0, format="%.2f")
-                novo_imposto = st.number_input("Imposto (%)", value=produto["imposto"], min_value=0.0, format="%.2f")
-                novo_repasse = st.number_input("Repasse (R$)", value=produto["repasse"], min_value=0.0, format="%.2f")
-                novo_usinagem = st.number_input("Usinagem (R$)", value=produto["usinagem"], min_value=0.0, format="%.2f")
-
-                st.markdown(f"<span style='color:red; font-weight:bold;'>Valor Final Atual: R$ {produto['valor_final']:.2f}</span>", unsafe_allow_html=True)
-
-            col1, col2 = st.columns(2)
-            with col1:
-                if st.button("Atualizar Produto"):
-                    valor_final = novo_base + (novo_base * novo_imposto / 100) + novo_repasse + novo_usinagem
-                    dados["Produtos"][index_produto] = {
-                        "nome": novo_nome,
-                        "valor_base": novo_base,
-                        "imposto": novo_imposto,
-                        "repasse": novo_repasse,
-                        "usinagem": novo_usinagem,
-                        "valor_final": round(valor_final, 2)} 
-                    salvar_dados(dados)
-                    st.success("Produto atualizado com sucesso!")
-
-            with col2:
-                if st.button("Excluir Produto"):
-                    dados["Produtos"].pop(index_produto)
-                    salvar_dados(dados)
-                    st.success("Produto excluído com sucesso!")
-                    st.experimental_rerun()
-            
-        elif sub_modo == "Orçamentos":
-            orcamentos = carregar_orcamentos()
-            if not orcamentos:
-                st.info("Nenhum orçamento salvo.")
-            else:
-                dados["Orcamento"] = orcamentos
-                st.success("Orçamento salvo com sucesso!")
-                st.write("Orçamentos carregados:", orcamentos)
-
-                indices = [f"{i+1} - {o['nome_cliente']} ({o['data']})" for i, o in enumerate(orcamentos)]
-                index = st.selectbox("Selecione um orçamento:", range(len(orcamentos)), format_func=lambda i: indices[i])
-                orcamento = orcamentos[index]
-
-                st.subheader("Editar Orçamento")
-                nome_cliente = st.text_input("Nome do Cliente", value=orc["nome_cliente"])
-                contato = st.text_input("Contato", value=orc["contato"])
-                bairro = st.text_input("Bairro", value=orc["bairro"])
-                salvar_orcamentos(orcamentos)
-                st.success("Orçamento atualizado com sucesso!")
-
-                if st.button("Excluir Orçamento"):
-                    orcamentos.pop(index)
-                    salvar_orcamentos(orcamentos)
-                    st.success("Orçamento excluído com sucesso!")
-                    st.experimental_rerun()
-        #Fim das alterações               
+        
+               
 if __name__ == "__main__":
  main()
