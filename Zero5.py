@@ -139,7 +139,7 @@ def main():
             st.write(f"**Total Geral: R$ {total_geral:.2f}**")
 
             if st.button("Salvar Orçamento"):
-                aba_orcamentos = conectar_planilha("Orçamentos")
+                aba_orcamentos = conectar_planilha("vendas")
                 if aba_orcamentos:
                     try:
                         for item in st.session_state.itens:
