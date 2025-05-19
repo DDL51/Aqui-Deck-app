@@ -85,9 +85,9 @@ def main():
                         st.error("Erro ao conectar à aba Produtos.")
                 else:
                     st.warning("O nome do produto não pode estar vazio.")
-# GERENCIAR .....
-        elif modo == "Gerenciar":
-            st.subheader("Gerenciamento de Dados")
+        # GERENCIAR .....
+    elif modo == "Gerenciar":
+        st.subheader("Gerenciamento de Dados")
             #st.info("""
             #O gerenciamento de **Produtos**, **Fixos**, **Orçamentos** e **Agenda** pode ser feito diretamente na planilha do Google.
 
