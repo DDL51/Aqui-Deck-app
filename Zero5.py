@@ -88,9 +88,6 @@ def main():
         # GERENCIAR .....
     elif modo == "Gerenciar":
         st.subheader("Gerenciamento de Dados")
-        st.info("""
-        O gerenciamento de **Produtos**, **Fixos**, **Orçamentos** e **Agenda** pode ser feito diretamente na planilha do Google.
-
     
     if st.button("Abrir Planilha"):
         js = f"window.open('{st.secrets['GOOGLE_CREDENTIALS']['sheet_url']}', '_blank')"
