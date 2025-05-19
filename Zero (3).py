@@ -113,7 +113,7 @@ def main():
             for i, item in enumerate(st.session_state.itens):
                 st.write(f"{i+1}. {item['produto']} - Qtd: {item['qtd']} - Comp: {item['comp']} mm - Total: R$ {item['total']:.2f}")
             st.write(f"**Total Geral: R$ {total_geral:.2f}**")
-            # ORÇAMENTO......
+            # LISTA PRODUTOS......
 def carregar_produtos():
     aba_produtos = conectar_planilha("Produtos")
     if not aba_produtos:
@@ -129,8 +129,67 @@ def carregar_produtos():
         except:
             continue
     return produtos
+    # ORÇAMENTOS....
+    elif modo == "Orçamentos":
+    st.subheader("Orçamento para Cliente")
+    nome_cliente = st.text_input("Nome do Cliente")
+    contato = st.text_input("Contato")
+    bairro = st.text_input("Bairro")
+
+    if "itens" not in st.session_state:
+        st.session_state.itens = []
+
+    produtos_disponiveis = carregar_produtos()
+    nomes_produtos = [p["nome"] for p in produtos_disponiveis]
+    produto_sel = st.selectbox("Produto:", nomes_produtos)
+    qtd = st.number_input("Quantidade", min_value=0.0)
+    comp = st.number_input("Comprimento (em mm)", min_value=0.0)
+
+    if st.button("Adicionar Produto"):
+        valor_unit = next((p["valor_final"] for p in produtos_disponiveis if p["nome"] == produto_sel), 0)
+        total = (qtd * comp / 1000) * valor_unit
+        st.session_state.itens.append({
+            "produto": produto_sel,
+            "qtd": qtd,
+            "comp": comp,
+            "valor_unit": valor_unit,
+            "total": total
+        })
+        st.success(f"{produto_sel} adicionado ao pedido!")
+
+    if st.session_state.itens:
+        st.subheader("Itens do Pedido")
+        total_geral = sum(i["total"] for i in st.session_state.itens)
+        for i, item in enumerate(st.session_state.itens):
+            st.write(f"{i+1}. {item['produto']} - Qtd: {item['qtd']} - Comp: {item['comp']} mm - Total: R$ {item['total']:.2f}")
+        st.write(f"**Total Geral: R$ {total_geral:.2f}**")
+
+        if st.button("Salvar Orçamento"):
+            aba_orcamentos = conectar_planilha("Orçamentos")
+            if aba_orcamentos:
+                try:
+                    for item in st.session_state.itens:
+                        aba_orcamentos.append_row([
+                            nome_cliente,
+                            contato,
+                            bairro,
+                            item["produto"],
+                            item["qtd"],
+                            item["comp"],
+                            item["valor_unit"],
+                            round(item["total"], 2)
+                        ])
+                    st.success("Orçamento salvo com sucesso!")
+                    st.session_state.itens.clear()
+                except Exception as e:
+                    st.error(f"Erro ao salvar orçamento: {e}")
+            else:
+                st.error("Erro ao conectar à aba Orçamentos.")    
                 
-# TERCEIRO NÍVEL :      
+
+    
+    
+    # TERCEIRO NÍVEL :      
     elif modo == "Gerenciar":
         sub_modo = st.radio("O que deseja gerenciar?", ["Produtos", "Orçamentos"])
 
