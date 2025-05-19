@@ -87,8 +87,8 @@ def main():
                     st.warning("O nome do produto não pode estar vazio.")
         # GERENCIAR .....
         # GERENCIAR .....
-        elif modo == "Gerenciar":
-            st.subheader("Gerenciamento de Dados")
+    elif modo == "Gerenciar":
+        st.subheader("Gerenciamento de Dados")
 
         # ID da planilha
         spreadsheet_id = "1Dx4X3a0GagiB0eyv_wqOPkmkSfUtW9i6B-sQATf75H0"
