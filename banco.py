@@ -10,7 +10,7 @@ def criar_banco():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             nome TEXT NOT NULL,
             custo REAL,
-            imposto REAL,
+            imposto% REAL,
             repasse REAL,
             usinagem REAL,
             valor_final REAL
