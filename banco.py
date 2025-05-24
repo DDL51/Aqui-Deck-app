@@ -13,7 +13,6 @@ def criar_banco():
             imposto% REAL,
             repasse REAL,
             usinagem REAL,
-            valor_final REAL
         )
     """)
 
@@ -26,18 +25,30 @@ def criar_banco():
         )
     """)
 
-    # Tabela de vendas (orçamentos)
+    # Tabela cadastro de clientes 
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS vendas (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             cliente TEXT,
             contato TEXT,
             bairro TEXT,
-            produto TEXT,
-            qtd REAL,
-            comp REAL,
-            valor_unit REAL,
-            total REAL
+            rua TEXT,
+        )
+    """)
+
+    # Tabela ORÇAMENTO 
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS vendas (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            cliente TEXT,
+            contato TEXT,
+            bairro TEXT,
+            rua TEXT,
+            quantidade TEXT,
+            comprimento TEXT,
+            Valor unitário TEXT 
+            
+            vamor total pagar TEXT 
         )
     """)
 
