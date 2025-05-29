@@ -20,20 +20,19 @@ def conectar_bd():
 
 
 def main():
-	conn = conectar_bd()
-  cursor = conn.cursor()
+    conn = conectar_bd()
+    cursor = conn.cursor()
+    print("\n=== Criar Orçamento para Cliente Já Cadastrado ===")
 
-  print("\n=== Criar Orçamento para Cliente Já Cadastrado ===")
-
-  # Busca inteligente: CPF ou nome
-  cliente_id = buscar_cliente(cursor)
-  print(f"✅ Cliente localizado com ID: {cliente_id}")
+    # Busca inteligente: CPF ou nome
+    cliente_id = buscar_cliente(cursor)
+    print(f"✅ Cliente localizado com ID: {cliente_id}")
     
-	for p in produtos:
-  print(f"{p[0]} - {p[1]}")
+    for p in produtos:
+    print(f"{p[0]} - {p[1]}")
 
-	produto_id = int(input("Escolha o ID do produto: "))
-  produto = buscar_produto_por_id(cursor, produto_id)
+    produto_id = int(input("Escolha o ID do produto: "))
+    produto = buscar_produto_por_id(cursor, produto_id)
         if not produto:
             print("Produto não encontrado.")
             continue
